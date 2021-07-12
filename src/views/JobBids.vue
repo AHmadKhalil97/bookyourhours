@@ -65,7 +65,7 @@ export default {
   name: "JobBids",
   components: {
     FreeLancerProfilePopup,
-    JobBid
+    JobBid,
   },
   mounted() {
     this.getJobBids();
@@ -95,21 +95,21 @@ export default {
       let obj = {};
       if (this.$route.params.jobId) {
         obj = {
-          jobId: this.$route.params.jobId
+          jobId: this.$route.params.jobId,
         };
       } else {
         obj = {
           sortBy: "asc",
-          user: this.$store.getters.user.id
+          user: this.$store.getters.user.id,
         };
       }
       this.$store.dispatch("getJobBids", obj);
-    }
+    },
   },
   computed: {
     jobBids() {
       return this.$store.getters.jobBids;
-    }
-  }
+    },
+  },
 };
 </script>

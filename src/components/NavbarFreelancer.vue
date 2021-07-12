@@ -371,7 +371,7 @@ export default {
       return ["Dashboard", "JobPost"].includes(this.$route.name)
         ? "fullwidth  not-sticky"
         : "fullwidth";
-    }
-  }
+    },
+  },
 };
 </script>

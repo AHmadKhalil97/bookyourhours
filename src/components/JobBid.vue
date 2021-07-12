@@ -55,7 +55,11 @@
 
           <!-- Buttons -->
           <div
-            class="buttons-to-right always-visible margin-top-25 margin-bottom-0"
+            class="
+              buttons-to-right
+              always-visible
+              margin-top-25 margin-bottom-0
+            "
           >
             <a
               v-if="user.accountType === 'employer'"
@@ -90,11 +94,11 @@
 export default {
   name: "JobBid",
   props: {
-    bid: Object
+    bid: Object,
   },
   data() {
     return {
-      offerAccepted: false
+      offerAccepted: false,
     };
   },
   methods: {
@@ -106,7 +110,7 @@ export default {
       this.$store
         .dispatch("assignJobBid", {
           bidId: this.bid.id,
-          jobPostId: this.$route.params.jobId
+          jobPostId: this.$route.params.jobId,
         })
         .then(({ data: { isAssigned } }) => {
           this.offerAccepted = isAssigned;
@@ -114,14 +118,14 @@ export default {
             message: "Offer Accepted Successfully!",
             type: "success",
             duration: 2000,
-            dismissible: true
+            dismissible: true,
           });
           this.$router.push("/jobs");
         });
     },
     setOffer() {
       this.$store.commit("setOfferToDelete", this.bid.id);
-    }
+    },
   },
   mounted() {
     if (!document.getElementById("customJs")) {
@@ -144,7 +148,7 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user;
-    }
-  }
+    },
+  },
 };
 </script>

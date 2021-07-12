@@ -14,7 +14,7 @@ export default new Vuex.Store({
     jobs: [],
     jobBids: [],
     job: {},
-    offerToDelete: null
+    offerToDelete: null,
   },
   getters: {
     loggedIn(state) {
@@ -37,7 +37,7 @@ export default new Vuex.Store({
     },
     jobBids(state) {
       return state.jobBids;
-    }
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -64,7 +64,7 @@ export default new Vuex.Store({
     },
     setJobBids(state, jobBids) {
       state.jobBids = jobBids;
-    }
+    },
   },
   actions: {
     commonAnalytics(vuexContext) {
@@ -135,7 +135,7 @@ export default new Vuex.Store({
               hourlyRate: data.hourlyRate,
               skills: data.skills,
               accountType: data.accountType,
-              phoneNumber: data.phoneNumber
+              phoneNumber: data.phoneNumber,
             })
             .then((response) => {
               vuexContext.dispatch("getUserById", response.data.id);
@@ -420,7 +420,7 @@ export default new Vuex.Store({
           return new Promise((resolve, reject) => {
             axios
               .post("/auth/refresh-tokens", {
-                refreshToken: vuexContext.state.tokens.refresh.token
+                refreshToken: vuexContext.state.tokens.refresh.token,
               })
               .then((response) => {
                 vuexContext.commit("setTokens", response.data);
@@ -442,7 +442,7 @@ export default new Vuex.Store({
         axios
           .post("/auth/login", {
             email: userData.email,
-            password: userData.password
+            password: userData.password,
           })
           .then((response) => {
             vuexContext.commit("setUser", response.data.user);
@@ -468,7 +468,7 @@ export default new Vuex.Store({
             email: userData.email,
             password: userData.password,
             phoneNumber: userData.phoneNumber,
-            accountType: userData.accountType
+            accountType: userData.accountType,
           })
           .then((response) => {
             vuexContext.commit("setUser", response.data.user);
@@ -491,7 +491,7 @@ export default new Vuex.Store({
         return new Promise((resolve, reject) => {
           axios
             .post("/auth/logout", {
-              refreshToken: vuexContext.state.tokens.refresh.token
+              refreshToken: vuexContext.state.tokens.refresh.token,
             })
             .then((response) => {
               localStorage.removeItem("user");
@@ -507,6 +507,6 @@ export default new Vuex.Store({
             });
         });
       }
-    }
-  }
+    },
+  },
 });

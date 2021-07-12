@@ -104,7 +104,7 @@ export default {
     SigninPopup,
     "tags-input": VoerroTagsInput,
     Multiselect,
-    Slider
+    Slider,
   },
   data() {
     return {
@@ -118,8 +118,8 @@ export default {
       selectedTags: [],
       format: {
         prefix: "$",
-        decimals: 0
-      }
+        decimals: 0,
+      },
     };
   },
   methods: {
@@ -128,7 +128,7 @@ export default {
     },
     getCats(searchCats) {
       this.value = searchCats;
-    }
+    },
   },
   mounted() {
     this.$store.dispatch("getAllCategories").then((res) => {
@@ -141,12 +141,12 @@ export default {
       res.data.map((tag) => {
         let refactorTag = {
           key: tag.id,
-          value: tag.title
+          value: tag.title,
         };
         this.tags.push(refactorTag);
       });
     });
-  }
+  },
 };
 </script>
 

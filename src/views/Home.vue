@@ -25,12 +25,12 @@ export default {
     RecentTasks,
     HeaderFreelancer,
     HeaderEmployer,
-    Price
+    Price,
   },
   computed: {
     user() {
       return this.$store.getters.user.accountType;
-    }
+    },
   },
   mounted() {
     if (!document.getElementById("customJs")) {
@@ -49,6 +49,6 @@ export default {
       customScript.setAttribute("id", "customJs");
       document.body.appendChild(customScript);
     }
-  }
+  },
 };
 </script>

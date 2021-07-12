@@ -85,7 +85,7 @@ export default {
       filterTags: [],
       filterCats: [],
       showAlert: false,
-      jobs: null
+      jobs: null,
     };
   },
   watch: {
@@ -109,7 +109,7 @@ export default {
     },
     orderBy: function () {
       this.getAllJobs();
-    }
+    },
   },
   methods: {
     getAllJobs() {
@@ -120,7 +120,7 @@ export default {
           sortBy: this.orderBy,
           tags: this.filterTags,
           cats: this.filterCats,
-          price: this.filterPrice
+          price: this.filterPrice,
         })
         .then((res) => {
           this.jobs = res.data.results;
@@ -130,7 +130,7 @@ export default {
             this.showAlert = true;
           }
         });
-    }
+    },
   },
   filters: {
     truncate: function (text) {
@@ -139,7 +139,7 @@ export default {
       } else {
         return text;
       }
-    }
+    },
   },
   mounted() {
     let data = this.$route.params.data;
@@ -168,7 +168,7 @@ export default {
       document.body.appendChild(customScript);
     }
     this.getAllJobs();
-  }
+  },
 };
 </script>
 

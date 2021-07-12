@@ -13,33 +13,33 @@ const routes = [
       {
         path: "/",
         name: "Home",
-        component: Home
+        component: Home,
       },
       {
         path: "/job/:id",
         name: "Job",
         component: () => import("@/views/Job.vue"),
         meta: {
-          requiresAuth: true
-        }
-      }
-    ]
+          requiresAuth: true,
+        },
+      },
+    ],
   },
   {
     path: "/login",
     name: "login",
     component: () => import("@/views/Login.vue"),
     meta: {
-      requiresVisitor: true
-    }
+      requiresVisitor: true,
+    },
   },
   {
     path: "/register",
     name: "register",
     component: () => import("@/views/Register.vue"),
     meta: {
-      requiresVisitor: true
-    }
+      requiresVisitor: true,
+    },
   },
   {
     path: "/dashboard",
@@ -48,7 +48,7 @@ const routes = [
       {
         path: "/dashboard",
         name: "Dashboard",
-        component: () => import("@/views/Dashboard.vue")
+        component: () => import("@/views/Dashboard.vue"),
       },
       // {
       //   path: "/post-a-job",
@@ -58,28 +58,28 @@ const routes = [
       {
         path: "/jobs",
         name: "Jobs",
-        component: () => import("@/views/ManageJobs.vue")
+        component: () => import("@/views/ManageJobs.vue"),
       },
       {
         params: true,
         path: "/job-bids/:jobId",
         name: "JobBids",
-        component: () => import("@/views/JobBids.vue")
+        component: () => import("@/views/JobBids.vue"),
       },
       {
         path: "/bids",
         name: "Bids",
-        component: () => import("@/views/JobBids.vue")
+        component: () => import("@/views/JobBids.vue"),
       },
       {
         path: "/profile",
         name: "Profile",
-        component: () => import("@/views/Profile.vue")
-      }
+        component: () => import("@/views/Profile.vue"),
+      },
     ],
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/browse-jobs",
@@ -88,23 +88,23 @@ const routes = [
       {
         path: "/browse-jobs",
         name: "BrowseJobs",
-        component: () => import("@/views/BrowseJobs.vue")
-      }
-    ]
+        component: () => import("@/views/BrowseJobs.vue"),
+      },
+    ],
   },
 
   {
     path: "/logout",
     name: "Logout",
-    component: () => import("@/views/Logout.vue")
-  }
+    component: () => import("@/views/Logout.vue"),
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   linkExactActiveClass: "current",
-  routes
+  routes,
 });
 
 export default router;

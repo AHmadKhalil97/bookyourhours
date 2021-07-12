@@ -34,12 +34,12 @@ export default {
     SideBar,
     JobPostPopup,
     DeleteJobPopup,
-    DeleteOfferPopup
+    DeleteOfferPopup,
   },
   computed: {
     user() {
       return this.$store.getters.user.accountType;
-    }
-  }
+    },
+  },
 };
 </script>

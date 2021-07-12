@@ -1,7 +1,13 @@
 <template>
   <div
     id="delete-offer-dialog"
-    class="simple-dialog delete-dialog zoom-anim-dialog mfp-hide dialog-with-tabs"
+    class="
+      simple-dialog
+      delete-dialog
+      zoom-anim-dialog
+      mfp-hide
+      dialog-with-tabs
+    "
   >
     <div class="popup-tab-content">
       <!-- Welcome Text -->
@@ -46,7 +52,7 @@ export default {
     removeOffer() {
       this.$store
         .dispatch("deleteJobBid", {
-          id: this.offerToDelete
+          id: this.offerToDelete,
         })
         .then((res) => {
           let obj = {};
@@ -54,11 +60,11 @@ export default {
           this.close();
           if (this.$route.params.jobId) {
             obj = {
-              jobId: this.$route.params.jobId
+              jobId: this.$route.params.jobId,
             };
           } else {
             obj = {
-              user: this.$store.getters.user.id
+              user: this.$store.getters.user.id,
             };
           }
 
@@ -73,12 +79,12 @@ export default {
     close() {
       this.$el.querySelector("button.mfp-close").click();
       this.$store.commit("setOfferToDelete", null);
-    }
+    },
   },
   computed: {
     offerToDelete() {
       return this.$store.state.offerToDelete;
-    }
-  }
+    },
+  },
 };
 </script>

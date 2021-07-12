@@ -1,7 +1,13 @@
 <template>
   <div
     id="delete-job-dialog"
-    class="simple-dialog delete-dialog zoom-anim-dialog mfp-hide dialog-with-tabs"
+    class="
+      simple-dialog
+      delete-dialog
+      zoom-anim-dialog
+      mfp-hide
+      dialog-with-tabs
+    "
   >
     <div class="popup-tab-content">
       <!-- Welcome Text -->

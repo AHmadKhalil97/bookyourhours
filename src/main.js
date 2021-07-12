@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.getters.loggedIn) {
       next({
-        name: "login"
+        name: "login",
       });
     } else {
       next();
@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
     if (store.getters.loggedIn) {
       next({
-        name: "Dashboard"
+        name: "Dashboard",
       });
     } else {
       next();
@@ -39,5 +39,5 @@ router.beforeEach((to, from, next) => {
 new Vue({
   router,
   store,
-  render: (h) => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

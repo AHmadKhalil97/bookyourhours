@@ -49,7 +49,7 @@ export default {
     // Fragment,
     Navbar,
     Footer,
-    SigninForm
-  }
+    SigninForm,
+  },
 };
 </script>

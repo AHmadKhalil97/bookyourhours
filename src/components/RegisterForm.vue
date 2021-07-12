@@ -169,29 +169,29 @@ export default {
       error: {
         name: {
           status: false,
-          message: ""
+          message: "",
         },
         email: {
           status: false,
-          message: ""
+          message: "",
         },
         phone: {
           status: false,
-          message: ""
+          message: "",
         },
         password: {
           status: false,
-          message: ""
+          message: "",
         },
         confirmPass: {
           status: false,
-          message: ""
+          message: "",
         },
         response: {
           status: false,
-          message: ""
-        }
-      }
+          message: "",
+        },
+      },
     };
   },
   methods: {
@@ -204,7 +204,7 @@ export default {
             email: this.email,
             password: this.password,
             phoneNumber: this.phone,
-            accountType: this.accountType
+            accountType: this.accountType,
           })
           .then(() => {
             this.name = "";
@@ -288,8 +288,8 @@ export default {
     validPassword(pass) {
       const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       return re.test(pass);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -306,7 +306,13 @@
                     v-bind:disabled="isLoading"
                     @click="addBid"
                     id="snackbar-place-bid"
-                    class="button ripple-effect move-on-hover full-width margin-top-30"
+                    class="
+                      button
+                      ripple-effect
+                      move-on-hover
+                      full-width
+                      margin-top-30
+                    "
                   >
                     <div v-if="isLoading" class="lds-ring">
                       <div></div>

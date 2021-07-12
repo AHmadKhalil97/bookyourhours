@@ -24,12 +24,12 @@ export default {
     SigninPopup,
     Footer,
     NavbarFreelancer,
-    Navbaruser
+    Navbaruser,
   },
   computed: {
     user() {
       return this.$store.getters.user.accountType;
-    }
-  }
+    },
+  },
 };
 </script>

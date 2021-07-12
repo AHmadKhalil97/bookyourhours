@@ -105,7 +105,7 @@ import Multiselect from "vue-multiselect/src/Multiselect";
 export default {
   components: {
     "tags-input": VoerroTagsInput,
-    Multiselect
+    Multiselect,
   },
   name: "Header_Freelancer",
   data() {
@@ -116,20 +116,20 @@ export default {
       categories: [],
       tags: [],
       selectedTags: [],
-      analytics: {}
+      analytics: {},
     };
   },
   methods: {
     search() {
       let data = {
         tags: this.selectedTags,
-        cats: this.value
+        cats: this.value,
       };
       this.$router.push({
         name: "BrowseJobs", //use name for router push
-        params: { data }
+        params: { data },
       });
-    }
+    },
   },
   async mounted() {
     this.$store.dispatch("getAllCategories").then((res) => {
@@ -142,14 +142,14 @@ export default {
       res.data.map((tag) => {
         let refactorTag = {
           key: tag.id,
-          value: tag.title
+          value: tag.title,
         };
         this.tags.push(refactorTag);
       });
     });
     const result = await this.$store.dispatch("commonAnalytics");
     this.analytics = result.data;
-  }
+  },
 };
 </script>
 

@@ -127,7 +127,7 @@
 
 <script>
 export default {
-  name: "SideFreelancer"
+  name: "SideFreelancer",
 };
 </script>
 

@@ -293,16 +293,16 @@ export default {
   data() {
     return {
       noOfFreelancer: "",
-      noOfJobs: ""
+      noOfJobs: "",
     };
   },
   components: {
-    VueSkeletonLoader
+    VueSkeletonLoader,
   },
   computed: {
     user() {
       return this.$store.getters.user;
-    }
+    },
   },
   mounted() {
     this.$store.dispatch("commonAnalytics").then((res) => {
@@ -326,7 +326,7 @@ export default {
       customScript.setAttribute("id", "customJs");
       document.body.appendChild(customScript);
     }
-  }
+  },
 };
 </script>
 

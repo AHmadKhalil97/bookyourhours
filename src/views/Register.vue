@@ -48,7 +48,7 @@ export default {
     // Fragment,
     Navbar,
     Footer,
-    RegisterForm
-  }
+    RegisterForm,
+  },
 };
 </script>

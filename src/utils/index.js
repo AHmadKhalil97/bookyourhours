@@ -87,5 +87,5 @@ export const countries = [
   { value: "UZ", label: "Uzbekistan" },
   { value: "YE", label: "Yemen" },
   { value: "ZM", label: "Zambia" },
-  { value: "ZW", label: "Zimbabwe" }
+  { value: "ZW", label: "Zimbabwe" },
 ];
