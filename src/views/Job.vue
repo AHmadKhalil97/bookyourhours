@@ -269,7 +269,15 @@
                       <h5>How long will this project take?</h5>
                     </div>
 
-                    <select v-model="time" class="selectpicker">
+                    <div class="mtt">
+                      <input
+                        v-model="time"
+                        placeholder="3 hrs , days , months"
+                        class="with-border margin-bottom-25"
+                      />
+                    </div>
+
+                    <!-- <select v-model="time" class="selectpicker">
                       <option value="Select project length">
                         Select project length
                       </option>
@@ -281,7 +289,7 @@
                       <option value="Less than 1 month">
                         Less than 1 month
                       </option>
-                    </select>
+                    </select> -->
                     <small v-if="error.time.status" class="error">
                       {{ error.time.message }}
                     </small>
@@ -426,7 +434,7 @@ export default {
     return {
       bids: [],
       isLoading: false,
-      time: "Select project length",
+      time: "",
       description: "",
       price: 20,
       job: {},
@@ -451,7 +459,6 @@ export default {
           status: false,
           message: "",
         },
-
         response: {
           status: false,
           message: "",
@@ -476,7 +483,7 @@ export default {
           })
           .then(() => {
             this.description = "";
-            this.time = "Select project length";
+            this.time = "";
             this.price = 20;
             this.isLoading = false;
             this.success.status = true;
@@ -500,17 +507,12 @@ export default {
     },
     validateBid() {
       if (this.description && this.time && this.price) {
-        if (this.time === "Select project length") {
-          this.error.time.status = true;
-          this.error.time.message = "Invalid time!";
-        }
-
         if (!this.price || this.price <= 0) {
           this.error.price.status = true;
           this.error.price.message = "Price is required!";
           return false;
         }
-        if (this.time === "Select project length") {
+        if (this.time.length < 4) {
           this.error.time.status = true;
           this.error.time.message = "Invalid time!";
           return false;
@@ -524,7 +526,7 @@ export default {
         this.error.description.status = true;
         this.error.description.message = "Description is required!";
       }
-      if (this.time === "Select project length") {
+      if (this.time.length < 4) {
         this.error.time.status = true;
         this.error.time.message = "Invalid time!";
       }

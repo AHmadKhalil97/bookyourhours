@@ -7,7 +7,7 @@
     <DeleteOfferPopup />
     <div class="dashboard-container">
       <SideBar v-if="user === 'employer'" />
-      <sideFreelancer v-if="user === 'freelancer'" />
+      <SideFreelancer v-if="user === 'freelancer'" />
       <router-view />
     </div>
   </div>

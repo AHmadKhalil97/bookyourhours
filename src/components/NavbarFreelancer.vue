@@ -38,7 +38,7 @@
                 </li> -->
 
                 <li>
-                  <router-link to="/dasboard">Dashboard</router-link>
+                  <router-link to="/dashboard">Dashboard</router-link>
                 </li>
 
                 <!-- <li>
