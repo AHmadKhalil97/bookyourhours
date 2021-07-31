@@ -3,7 +3,7 @@
 ================================================== -->
   <div id="footer">
     <!-- Footer Top Section -->
-    <div class="footer-top-section">
+    <div class="footer-top-section" style="display: none">
       <div class="container">
         <div class="row">
           <div class="col-xl-12">
@@ -94,13 +94,13 @@
     <!-- Footer Top Section / End -->
 
     <!-- Footer Middle Section -->
-    <div class="footer-middle-section">
+    <div class="footer-middle-section" style="display: none">
       <div class="container">
         <div class="row">
           <!-- Links -->
           <div class="col-xl-2 col-lg-2 col-md-3">
             <div class="footer-links">
-              <h3>For Candidates</h3>
+              <h3>Freelancers</h3>
               <ul>
                 <li>
                   <!-- <a href="#"><span>Browse Jobs</span></a> -->
@@ -124,14 +124,14 @@
           <!-- Links -->
           <div class="col-xl-2 col-lg-2 col-md-3">
             <div class="footer-links">
-              <h3>For Employers</h3>
+              <h3>Employers</h3>
               <ul>
                 <!-- <li>
                   <a href="#"><span>Browse Candidates</span></a>
                 </li> -->
                 <li>
                   <!-- <a href="#"><span>Post a Job</span></a> -->
-                  <router-link :to="{ name: 'JobPost' }">Jobpost</router-link>
+                  <router-link :to="{ name: 'Jobs' }">Jobs</router-link>
                 </li>
                 <!-- <li>
                   <a href="#"><span>Post a Task</span></a>
@@ -168,11 +168,13 @@
               <ul>
                 <li>
                   <!-- <a href="#"><span>Log In</span></a> -->
-                  <router-link :to="{ name: 'Login' }">Log In</router-link>
                 </li>
-                <!-- <li>
-                  <a href="#"><span>My Account</span></a>
-                </li> -->
+                <li>
+                  <!-- <a href="#"><span>My Account</span></a> -->
+                  <router-link :to="{ name: 'Profile' }"
+                    >My Account</router-link
+                  >
+                </li>
               </ul>
             </div>
           </div>

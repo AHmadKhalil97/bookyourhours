@@ -111,19 +111,20 @@
               </div>
               <div class="col">
                 <div class="submit-field">
-                  <h5>Time Required</h5>
+                  <h5>Days Required</h5>
                   <input
                     v-model="time"
-                    type="text"
+                    type="number"
+                    min="1"
                     class="with-border"
-                    placeholder="3 hrs , days , months"
+                    placeholder="e.g. 3 days"
                   />
                   <small v-if="error.time.status" class="error">
                     {{ error.time.message }}
                   </small>
                 </div>
               </div>
-              <div class="col-xl-12">
+              <!-- <div class="col-xl-12">
                 <div class="submit-field">
                   <h5>Job Type</h5>
                   <div class="feedback-yes-no margin-top-0">
@@ -159,7 +160,7 @@
                     {{ error.jobType.message }}
                   </small>
                 </div>
-              </div>
+              </div> -->
               <div class="col-xl-12">
                 <div class="submit-field">
                   <h5>Job Description</h5>
@@ -255,7 +256,6 @@ export default {
       description: null,
       price: null,
       currency: "USD",
-      jobType: null,
       tags: [],
       categories: [],
       selectedTags: [],
@@ -278,10 +278,6 @@ export default {
           message: "",
         },
         price: {
-          status: false,
-          message: "",
-        },
-        jobType: {
           status: false,
           message: "",
         },
@@ -321,11 +317,11 @@ export default {
             description: this.description,
             price: Number.parseInt(this.price),
             currency: "USD",
-            jobType: this.jobType,
+            jobType: "fixed",
             tags: this.selectedTags.map((tag) => tag.value),
             questions: this.selectedQuestions.map((quest) => quest.value),
             category: this.category.id,
-            time: this.time,
+            time: this.time + " Days",
           })
           .then(() => {
             this.popupClose();
@@ -344,7 +340,6 @@ export default {
             this.price = null;
             this.selectedQuestions = [];
             this.selectedTags = [];
-            this.jobType = null;
             this.time = null;
             this.isLoading = false;
           })
@@ -374,11 +369,11 @@ export default {
               description: this.description,
               price: Number.parseInt(this.price),
               currency: "USD",
-              jobType: this.jobType,
+              jobType: "fixed",
               tags: this.selectedTags.map((tag) => tag.value),
               questions: this.selectedQuestions.map((quest) => quest.value),
               category: this.category.id,
-              time: this.time,
+              time: this.time + " Days",
             },
           })
           .then(() => {
@@ -398,7 +393,6 @@ export default {
             this.price = null;
             this.selectedQuestions = [];
             this.selectedTags = [];
-            this.jobType = null;
             this.time = null;
             this.isLoading = false;
           })
@@ -422,7 +416,6 @@ export default {
         this.description &&
         this.price &&
         this.selectedTags.length !== 0 &&
-        this.jobType &&
         this.category &&
         this.time
       ) {
@@ -431,7 +424,6 @@ export default {
         this.error.description.status = false;
         this.error.price.status = false;
         this.error.selectedTags.status = false;
-        this.error.jobType.status = false;
         this.error.time.status = false;
         return true;
       }
@@ -451,10 +443,6 @@ export default {
         this.error.tags.status = true;
         this.error.tags.message = "Tags is required!";
       }
-      if (!this.jobType) {
-        this.error.jobType.status = true;
-        this.error.jobType.message = "Job type is required!";
-      }
       if (!this.time) {
         this.error.time.status = true;
         this.error.time.message = "Time period is required!";
@@ -469,7 +457,6 @@ export default {
         this.error.description.status = false;
         this.error.price.status = false;
         this.error.selectedTags.status = false;
-        this.error.jobType.status = false;
         this.error.time.status = false;
       }, 5000);
     },
@@ -488,7 +475,6 @@ export default {
       this.description = val?.description || null;
       this.price = val?.price || null;
       this.currency = val?.currency || "USD";
-      this.jobType = val?.jobType || null;
       this.selectedTags = (val?.tags || []).map((tag) => {
         return {
           key: tag.id,

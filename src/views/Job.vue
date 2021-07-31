@@ -266,13 +266,15 @@
                     <div
                       class="section-headline margin-top-25 margin-bottom-12"
                     >
-                      <h5>How long will this project take?</h5>
+                      <h5>How many days will this project take?</h5>
                     </div>
 
                     <div class="mtt">
                       <input
+                        type="number"
+                        min="1"
                         v-model="time"
-                        placeholder="3 hrs , days , months"
+                        placeholder="e.g. 3 days"
                         class="with-border margin-bottom-25"
                       />
                     </div>
@@ -512,7 +514,7 @@ export default {
           this.error.price.message = "Price is required!";
           return false;
         }
-        if (this.time.length < 4) {
+        if (this.time < 1) {
           this.error.time.status = true;
           this.error.time.message = "Invalid time!";
           return false;
@@ -526,7 +528,7 @@ export default {
         this.error.description.status = true;
         this.error.description.message = "Description is required!";
       }
-      if (this.time.length < 4) {
+      if (this.time < 1) {
         this.error.time.status = true;
         this.error.time.message = "Invalid time!";
       }

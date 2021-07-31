@@ -154,9 +154,10 @@
                     <h5>Time Required</h5>
                     <input
                       v-model="time"
-                      type="text"
+                      type="number"
+                      min="1"
                       class="with-border"
-                      placeholder="3 hrs , days , months"
+                      placeholder="e.g. 3 days"
                     />
                     <small v-if="error.time.status" class="error">
                       {{ error.time.message }}

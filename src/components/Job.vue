@@ -51,13 +51,22 @@
 
       <!-- </a> -->
       <a
-        ref="signInDialog"
+        ref="JobPostDialog"
         href="#job-post-dialog"
         class="popup-with-zoom-anim button gray ripple-effect ico"
         title="Edit"
         data-tippy-placement="top"
         @click="setJob"
         ><i class="icon-feather-edit"></i
+      ></a>
+      <a
+        ref="JobDetailsDialog"
+        href="#job-details-dialog"
+        class="popup-with-zoom-anim button info ripple-effect ico"
+        title="Details"
+        data-tippy-placement="top"
+        @click="setJob"
+        ><i class="icon-material-outline-info"></i
       ></a>
       <a
         ref="deleteDialog"
@@ -73,7 +82,7 @@
   </li>
 </template>
 <script>
-import { getJquery } from "../helps";
+import { getJquery } from "../helpers";
 export default {
   name: "Job",
   props: {

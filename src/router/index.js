@@ -92,11 +92,15 @@ const routes = [
       },
     ],
   },
-
   {
     path: "/logout",
     name: "Logout",
     component: () => import("@/views/Logout.vue"),
+  },
+  {
+    path: "/404",
+    name: "404",
+    component: () => import("@/views/404.vue"),
   },
 ];
 

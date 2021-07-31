@@ -30,7 +30,7 @@
               <label for="intro-keywords" class="field-title ripple-effect"
                 >Where</label
               >
-              <tags-input
+              <!-- <tags-input
                 element-id="tags"
                 :max="2"
                 :allow-duplicates="false"
@@ -41,8 +41,7 @@
               ></tags-input>
             </div>
 
-            <!-- Search Field -->
-            <div class="intro-search-field">
+            <div class="intro-search-field"> -->
               <multiselect
                 v-model="value"
                 :options="categories"
@@ -56,9 +55,7 @@
                 track-by="name"
                 :preselect-first="true"
               >
-                <template
-                  slot="selection"
-                  slot-scope="{ values, search, isOpen }"
+                <template slot="selection" slot-scope="{ values, isOpen }"
                   ><span
                     class="multiselect__single"
                     v-if="values.length &amp;&amp; !isOpen"
@@ -95,15 +92,11 @@
         <div class="col-md-12">
           <ul class="intro-stats margin-top-45 hide-under-992px">
             <li>
-              <strong class="counter">1,586</strong>
+              <strong class="counter">{{ analytics.jobPostCount }}</strong>
               <span>Jobs Posted</span>
             </li>
             <li>
-              <strong class="counter">3,543</strong>
-              <span>Tasks Posted</span>
-            </li>
-            <li>
-              <strong class="counter">1,232</strong>
+              <strong class="counter">{{ analytics.freelancerCount }}</strong>
               <span>Freelancers</span>
             </li>
           </ul>
@@ -114,12 +107,12 @@
 </template>
 
 <script>
-import VoerroTagsInput from "@voerro/vue-tagsinput";
+// import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
 import Multiselect from "vue-multiselect/src/Multiselect";
 export default {
   components: {
-    "tags-input": VoerroTagsInput,
+    // "tags-input": VoerroTagsInput,
     Multiselect,
   },
   name: "Header_Employer",
@@ -131,6 +124,7 @@ export default {
       categories: [],
       tags: [],
       selectedTags: [],
+      analytics: {},
     };
   },
   methods: {
@@ -160,6 +154,10 @@ export default {
         };
         this.tags.push(refactorTag);
       });
+    });
+
+    this.$store.dispatch("commonAnalytics").then((res) => {
+      this.analytics = res.data;
     });
   },
 };

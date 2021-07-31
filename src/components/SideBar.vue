@@ -99,7 +99,7 @@
             <!-- </ul> -->
 
             <ul data-submenu-title="Account">
-              <li>
+              <li :class="`${$route.name === 'Profile' ? 'active' : ''}`">
                 <router-link :to="{ name: 'Profile' }"
                   ><i class="icon-material-outline-settings"></i>
                   Settings</router-link

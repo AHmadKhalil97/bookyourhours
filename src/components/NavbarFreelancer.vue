@@ -53,7 +53,7 @@
           <!-- Right Side Content / End -->
           <div v-if="loggedIn" class="right-side">
             <!--  User Notifications -->
-            <div class="header-widget hide-on-mobile">
+            <div class="header-widget hide-on-mobile" style="display: none">
               <!-- Notifications -->
               <div class="header-notifications">
                 <!-- Trigger -->
@@ -272,17 +272,19 @@
                       </div>
                       <div class="user-name">
                         {{ user.name }}
-                        <span>{{ user.accountType }}</span>
+                        <span>{{
+                          capitalizeFirstLetter(user.accountType)
+                        }}</span>
                       </div>
                     </div>
 
                     <!-- User Status Switcher -->
-                    <div id="snackbar-user-status" class="status-switch">
-                      <label class="user-online current-status">Online</label>
-                      <label class="user-invisible">Invisible</label>
-                      <!-- Status Indicator -->
-                      <span class="status-indicator" aria-hidden="true"></span>
-                    </div>
+                    <!-- <div id="snackbar-user-status" class="status-switch"> -->
+                    <!-- <label class="user-online current-status">Online</label> -->
+                    <!-- <label class="user-invisible">Invisible</label> -->
+                    <!-- Status Indicator -->
+                    <!-- <span class="status-indicator" aria-hidden="true"></span> -->
+                    <!-- </div> -->
                   </div>
 
                   <ul class="user-menu-small-nav">
@@ -355,11 +357,17 @@
 </template>
 <script>
 // import { Fragment } from "vue-fragment";
+import { inializeHeaderDropDown } from "@/helpers/index";
 export default {
   components: {
     // Fragment
   },
   name: "Navbar",
+  methods: {
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
@@ -372,6 +380,9 @@ export default {
         ? "fullwidth  not-sticky"
         : "fullwidth";
     },
+  },
+  mounted() {
+    inializeHeaderDropDown();
   },
 };
 </script>

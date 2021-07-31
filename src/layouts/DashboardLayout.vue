@@ -5,6 +5,7 @@
     <JobPostPopup />
     <DeleteJobPopup />
     <DeleteOfferPopup />
+    <JobDetailsPopup />
     <div class="dashboard-container">
       <SideBar v-if="user === 'employer'" />
       <SideFreelancer v-if="user === 'freelancer'" />
@@ -21,6 +22,7 @@ import NavbarFreelancer from "@/components/NavbarFreelancer";
 import SideBar from "@/components/SideBar";
 import SideFreelancer from "@/components/SideFreelancer";
 import JobPostPopup from "@/components/JobPostPopup";
+import JobDetailsPopup from "@/components/JobDetailsPopup";
 import DeleteJobPopup from "@/components/DeleteJobPopup";
 import DeleteOfferPopup from "@/components/DeleteOfferPopup";
 
@@ -33,6 +35,7 @@ export default {
     SideFreelancer,
     SideBar,
     JobPostPopup,
+    JobDetailsPopup,
     DeleteJobPopup,
     DeleteOfferPopup,
   },

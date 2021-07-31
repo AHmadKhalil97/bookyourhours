@@ -18,66 +18,14 @@
       </div>
 
       <!-- Fun Facts Container -->
-      <div v-if="user.accountType === 'employer'" class="fun-facts-container">
+      <div class="fun-facts-container">
         <div class="fun-fact" data-fun-fact-color="#36bd78">
           <div class="fun-fact-text">
-            <span>No of Freelancers</span>
-            <h4 v-if="noOfFreelancer">{{ noOfFreelancer }}</h4>
-            <vue-skeleton-loader
-              v-else
-              :width="100"
-              :height="50"
-              animation="fade"
-              class="mtt"
-            />
-          </div>
-          <div class="fun-fact-icon">
-            <i class="icon-feather-users"></i>
-          </div>
-        </div>
-        <div class="fun-fact" data-fun-fact-color="#b81b7f">
-          <div class="fun-fact-text">
-            <span>No of Jobs</span>
-            <h4 v-if="noOfJobs">{{ noOfJobs }}</h4>
-            <vue-skeleton-loader
-              v-else
-              :width="100"
-              :height="50"
-              animation="fade"
-              class="mtt"
-            />
-          </div>
-          <div class="fun-fact-icon">
-            <i class="icon-material-outline-business-center"></i>
-          </div>
-        </div>
-        <!-- <div class="fun-fact" data-fun-fact-color="#efa80f">
-          <div class="fun-fact-text">
-            <span>Reviews</span>
-            <h4>28</h4>
-          </div>
-          <div class="fun-fact-icon">
-            <i class="icon-material-outline-rate-review"></i>
-          </div>
-        </div> -->
-
-        <!-- Last one has to be hidden below 1600px, sorry :( -->
-        <!-- <div class="fun-fact" data-fun-fact-color="#2a41e6">
-          <div class="fun-fact-text">
-            <span>This Month Views</span>
-            <h4>987</h4>
-          </div>
-          <div class="fun-fact-icon">
-            <i class="icon-feather-trending-up"></i>
-          </div>
-        </div> -->
-      </div>
-
-      <div v-else class="fun-facts-container">
-        <div class="fun-fact" data-fun-fact-color="#36bd78">
-          <div class="fun-fact-text">
-            <span>Total Bids</span>
-            <h4 v-if="totalBids">{{ totalBids }}</h4>
+            <span
+              >Total
+              {{ user.accountType === "employer" ? "Jobs" : "Bids" }}</span
+            >
+            <h4 v-if="total">{{ total }}</h4>
             <vue-skeleton-loader
               v-else
               :width="100"
@@ -106,7 +54,6 @@
             <i class="icon-line-awesome-clock-o"></i>
           </div>
         </div>
-
         <div class="fun-fact" data-fun-fact-color="#36bd78">
           <div class="fun-fact-text">
             <span>Completed Jobs</span>
@@ -366,7 +313,7 @@ export default {
     return {
       noOfFreelancer: "",
       noOfJobs: "",
-      totalBids: "119",
+      total: "119",
       jobsInProgress: "4",
       jobsCompleted: "37",
     };

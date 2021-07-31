@@ -98,8 +98,12 @@
 
 <script>
 import Job from "../components/Job.vue";
-import { getJquery } from "../../src/helps";
+import { getJquery } from "../../src/helpers";
 export default {
+  created() {
+    if (this.$store.getters.user.accountType !== "employer")
+      this.$router.push("/404");
+  },
   components: { Job },
   name: "ManageJobs",
   methods: {

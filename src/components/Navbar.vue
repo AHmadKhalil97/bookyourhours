@@ -53,7 +53,7 @@
           <!-- Right Side Content / End -->
           <div v-if="loggedIn" class="right-side">
             <!--  User Notifications -->
-            <div class="header-widget hide-on-mobile">
+            <div class="header-widget hide-on-mobile" style="display: none">
               <!-- Notifications -->
               <div class="header-notifications">
                 <!-- Trigger -->
@@ -245,26 +245,26 @@
             <!--  User Notifications / End -->
 
             <!-- User Menu -->
-            <!-- <div class="header-widget"> -->
-            <!-- Messages -->
-            <!-- <div class="header-notifications user-menu"> -->
-            <!-- <div class="header-notifications-trigger"> -->
-            <!-- <a href="#"> -->
-            <div class="user-avatar status-online margin-top-20">
-              <img
-                :src="'https://ui-avatars.com/api/?name=' + user.name"
-                alt=""
-              />
-            </div>
-            <!-- </a> -->
-            <!-- </div> -->
+            <div class="header-widget">
+              <!-- Messages -->
+              <div class="header-notifications user-menu">
+                <div class="header-notifications-trigger">
+                  <a href="#">
+                    <div class="user-avatar status-online">
+                      <img
+                        :src="'https://ui-avatars.com/api/?name=' + user.name"
+                        alt=""
+                      />
+                    </div>
+                  </a>
+                </div>
 
-            <!-- Dropdown -->
-            <!-- <div class="header-notifications-dropdown"> -->
-            <!-- User Status -->
-            <!-- <div class="user-status"> -->
-            <!-- User Name / Avatar -->
-            <!-- <div class="user-details">
+                <!-- Dropdown -->
+                <div class="header-notifications-dropdown">
+                  <!-- User Status -->
+                  <div class="user-status">
+                    <!-- User Name / Avatar -->
+                    <div class="user-details">
                       <div class="user-avatar status-online">
                         <img
                           :src="'https://ui-avatars.com/api/?name=' + user.name"
@@ -273,20 +273,22 @@
                       </div>
                       <div class="user-name">
                         {{ user.name }}
-                        <span>{{ user.accountType }}</span>
+                        <span>{{
+                          capitalizeFirstLetter(user.accountType)
+                        }}</span>
                       </div>
-                    </div> -->
+                    </div>
 
-            <!-- User Status Switcher -->
-            <!-- <div id="snackbar-user-status" class="status-switch"> -->
-            <!-- <label class="user-online current-status">Online</label> -->
-            <!-- <label class="user-invisible">Invisible</label> -->
-            <!-- Status Indicator -->
-            <!-- <span class="status-indicator" aria-hidden="true"></span> -->
-            <!-- </div> -->
-            <!-- </div> -->
+                    <!-- User Status Switcher -->
+                    <!-- <div id="snackbar-user-status" class="status-switch"> -->
+                    <!-- <label class="user-online current-status">Online</label> -->
+                    <!-- <label class="user-invisible">Invisible</label> -->
+                    <!-- Status Indicator -->
+                    <!-- <span class="status-indicator" aria-hidden="true"></span> -->
+                    <!-- </div> -->
+                  </div>
 
-            <!-- <ul class="user-menu-small-nav">
+                  <ul class="user-menu-small-nav">
                     <li>
                       <router-link :to="{ name: 'Dashboard' }"
                         ><i class="icon-material-outline-dashboard"></i>
@@ -305,10 +307,10 @@
                         Logout
                       </router-link>
                     </li>
-                  </ul> -->
-            <!-- </div> -->
-            <!-- </div> -->
-            <!-- </div> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
             <!-- User Menu / End -->
 
             <!-- Mobile Navigation Button -->
@@ -356,11 +358,17 @@
 </template>
 <script>
 // import { Fragment } from "vue-fragment";
+import { inializeHeaderDropDown } from "@/helpers/index";
 export default {
   components: {
     // Fragment,
   },
   name: "Navbar",
+  methods: {
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
@@ -373,6 +381,9 @@ export default {
         ? "fullwidth dashboard-header not-sticky"
         : "fullwidth";
     },
+  },
+  mounted() {
+    inializeHeaderDropDown();
   },
 };
 </script>

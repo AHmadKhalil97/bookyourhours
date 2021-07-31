@@ -82,7 +82,6 @@ export const countries = [
   { value: "UA", label: "Ukraine" },
   { value: "GB", label: "United Kingdom" },
   { value: "US", label: "United States" },
-
   { value: "UY", label: "Uruguay" },
   { value: "UZ", label: "Uzbekistan" },
   { value: "YE", label: "Yemen" },

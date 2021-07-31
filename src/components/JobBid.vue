@@ -48,9 +48,14 @@
           <ul class="dashboard-task-info bid-info">
             <li>
               <strong>{{ bid.currency }} {{ bid.price }}</strong
-              ><span>Fixed Price</span>
+              ><span>{{
+                bid.jobType === "fixed" ? "Fixed Price" : "Hourly Rate"
+              }}</span>
             </li>
-            <li><strong>14 Days</strong><span>Delivery Time</span></li>
+            <li>
+              <strong>{{ bid.time }}</strong
+              ><span>Delivery Time</span>
+            </li>
           </ul>
 
           <!-- Buttons -->

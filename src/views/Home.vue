@@ -2,7 +2,7 @@
   <div>
     <div v-if="user === 'freelancer'">
       <HeaderFreelancer />
-      <Categories />
+      <!-- <Categories /> -->
       <RecentTasks />
     </div>
     <div v-else>
@@ -14,14 +14,14 @@
 <script>
 import HeaderEmployer from "@/components/HeaderEmployer";
 import HeaderFreelancer from "@/components/HeaderFreelancer";
-import Categories from "@/components/Categories";
+// import Categories from "@/components/Categories";
 import RecentTasks from "@/components/RecentTasks";
 import Price from "@/components/Price";
 // import { Fragment } from "vue-fragment";
 export default {
   components: {
     // Fragment,
-    Categories,
+    // Categories,
     RecentTasks,
     HeaderFreelancer,
     HeaderEmployer,

@@ -31,7 +31,7 @@
               <label for="intro-keywords" class="field-title ripple-effect"
                 >What you need done?</label
               >
-              <tags-input
+              <!-- <tags-input
                 element-id="tags"
                 :max="2"
                 :allow-duplicates="false"
@@ -42,8 +42,7 @@
               ></tags-input>
             </div>
 
-            <!-- Search Field -->
-            <div class="intro-search-field">
+            <div class="intro-search-field"> -->
               <multiselect
                 v-model="value"
                 :options="categories"
@@ -57,9 +56,7 @@
                 track-by="name"
                 :preselect-first="true"
               >
-                <template
-                  slot="selection"
-                  slot-scope="{ values, search, isOpen }"
+                <template slot="selection" slot-scope="{ values, isOpen }"
                   ><span
                     class="multiselect__single"
                     v-if="values.length &amp;&amp; !isOpen"
@@ -99,12 +96,12 @@
 </template>
 
 <script>
-import VoerroTagsInput from "@voerro/vue-tagsinput";
+// import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
 import Multiselect from "vue-multiselect/src/Multiselect";
 export default {
   components: {
-    "tags-input": VoerroTagsInput,
+    // "tags-input": VoerroTagsInput,
     Multiselect,
   },
   name: "Header_Freelancer",
@@ -131,7 +128,7 @@ export default {
       });
     },
   },
-  async mounted() {
+  mounted() {
     this.$store.dispatch("getAllCategories").then((res) => {
       this.gettingCat = false;
       res.data.map((cat) => {
@@ -147,8 +144,10 @@ export default {
         this.tags.push(refactorTag);
       });
     });
-    const result = await this.$store.dispatch("commonAnalytics");
-    this.analytics = result.data;
+
+    this.$store.dispatch("commonAnalytics").then((res) => {
+      this.analytics = res.data;
+    });
   },
 };
 </script>

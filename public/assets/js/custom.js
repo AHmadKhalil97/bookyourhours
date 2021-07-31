@@ -229,47 +229,50 @@
     /*--------------------------------------------------*/
     /*  Notification Dropdowns
 	/*--------------------------------------------------*/
-    $(".header-notifications").each(function () {
-      var userMenu = $(this);
-      var userMenuTrigger = $(this).find(".header-notifications-trigger a");
+    // $(".header-notifications").each(function () {
+    //   var userMenu = $(this);
+    //   var userMenuTrigger = $(this).find(".header-notifications-trigger a");
 
-      $(userMenuTrigger).on("click", function (event) {
-        event.preventDefault();
+    //   $(userMenuTrigger).on("click", function (event) {
+    //     event.preventDefault();
+    //     event.stopPropagation();
 
-        if ($(this).closest(".header-notifications").is(".active")) {
-          close_user_dropdown();
-        } else {
-          close_user_dropdown();
-          userMenu.addClass("active");
-        }
-      });
-    });
+    //     if ($(this).closest(".header-notifications").is(".active")) {
+    //       close_user_dropdown();
+    //       console.log('inactive');
+    //     } else {
+    //       console.log('active');
+    //       close_user_dropdown();
+    //       userMenu.addClass("active");
+    //     }
+    //   });
+    // });
 
-    // Closing function
-    function close_user_dropdown() {
-      $(".header-notifications").removeClass("active");
-    }
+    // // Closing function
+    // function close_user_dropdown() {
+    //   $(".header-notifications").removeClass("active");
+    // }
 
-    // Closes notification dropdown on click outside the conatainer
-    var mouse_is_inside = false;
+    // // Closes notification dropdown on click outside the conatainer
+    // var mouse_is_inside = false;
 
-    $(".header-notifications").on("mouseenter", function () {
-      mouse_is_inside = true;
-    });
-    $(".header-notifications").on("mouseleave", function () {
-      mouse_is_inside = false;
-    });
+    // $(".header-notifications").on("mouseenter", function () {
+    //   mouse_is_inside = true;
+    // });
+    // $(".header-notifications").on("mouseleave", function () {
+    //   mouse_is_inside = false;
+    // });
 
-    $("body").mouseup(function () {
-      if (!mouse_is_inside) close_user_dropdown();
-    });
+    // $("body").mouseup(function () {
+    //   if (!mouse_is_inside) close_user_dropdown();
+    // });
 
-    // Close with ESC
-    $(document).keyup(function (e) {
-      if (e.keyCode == 27) {
-        close_user_dropdown();
-      }
-    });
+    // // Close with ESC
+    // $(document).keyup(function (e) {
+    //   if (e.keyCode == 27) {
+    //     close_user_dropdown();
+    //   }
+    // });
 
     /*--------------------------------------------------*/
     /*  User Status Switch

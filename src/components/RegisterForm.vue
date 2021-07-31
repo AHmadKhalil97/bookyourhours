@@ -8,7 +8,6 @@
         <router-link to="/login">Log in!</router-link></span
       >
     </div>
-    <p>{{ accountType }}</p>
     <!-- Account Type -->
     <div class="account-type">
       <div>

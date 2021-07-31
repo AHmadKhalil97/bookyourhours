@@ -13,7 +13,7 @@
 <script>
 import JobPostForm from "@/components/JobPostForm";
 export default {
-  name: "JobPostPopup",
+  name: "JobPostDialog",
   components: {
     JobPostForm,
   },
