@@ -67,8 +67,7 @@
             "
           >
             <a
-              v-if="user.accountType === 'employer'"
-              :disabled="offerAccepted"
+              v-if="user.accountType === 'employer' && !bid.isAssigned"
               @click="acceptOffer"
               class="acceptOffer button green ripple-effect"
               ><i class="icon-material-outline-check"></i>
@@ -80,7 +79,7 @@
               ><i class="icon-feather-mail"></i> Send Message</a
             > -->
             <a
-              v-if="!offerAccepted"
+              v-if="!bid.isAssigned"
               href="#delete-offer-dialog"
               class="popup-with-zoom-anim button red ripple-effect ico"
               title="Remove Bid"
@@ -88,6 +87,14 @@
               @click="setOffer"
               ><i class="icon-feather-trash-2"></i
             ></a>
+            <a
+              v-if="bid.isAssigned"
+              class="button ripple-effect green"
+              title="Bid has been accepted by the Employer."
+              data-tippy-placement="top"
+            >
+              BID ACCEPTED
+            </a>
           </div>
         </div>
       </div>

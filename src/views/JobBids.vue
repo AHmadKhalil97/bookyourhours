@@ -3,7 +3,7 @@
     <div class="dashboard-content-inner">
       <!-- Dashboard Headline -->
       <div class="dashboard-headline">
-        <h3>Manage Bidders</h3>
+        <h3>Manage Bids</h3>
         <span class="margin-top-7"
           >Bids for <a href="#">Food Delivery Mobile Application</a></span
         >
@@ -15,7 +15,7 @@
             <li>
               <router-link :to="{ name: 'Dashboard' }">Dashboard</router-link>
             </li>
-            <li>Manage Bidders</li>
+            <li>Manage Bids</li>
           </ul>
         </nav>
       </div>
@@ -30,7 +30,7 @@
               <h3>
                 <i class="icon-material-outline-supervisor-account"></i>
                 {{ jobBids.length }}
-                {{ jobBids.length === 1 ? "Bidder" : "Bidders" }}
+                {{ jobBids.length === 1 ? "Bid" : "Bids" }}
               </h3>
               <!-- <div class="sort-by">
                 <select class="selectpicker hide-tick">

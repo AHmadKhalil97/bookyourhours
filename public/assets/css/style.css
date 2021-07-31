@@ -15132,7 +15132,7 @@ ul.dashboard-box-list > li:hover {
 }
 
 .dashboard-box .button.red    { background-color: #dc3139; box-shadow: 0 3px 8px rgba(234,65,81,0.15); }
-.dashboard-box .button.green  { background-color: #40b660; box-shadow: 0 3px 8px rgba(64,182,96,0.15); }
+.dashboard-box .button.green  { background-color: #40b660; box-shadow: 0 3px 8px rgba(64,182,96,0.15); color: white;}
 .dashboard-box .button.dark   { background-color: #333333; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
 .dashboard-box .button.gray   { background-color: #eee; color: #666; box-shadow: none; }
 .dashboard-box .button.info   { background-color: #5bc0de; box-shadow: none; }
