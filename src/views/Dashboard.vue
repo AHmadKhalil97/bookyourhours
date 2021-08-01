@@ -25,7 +25,13 @@
               >Total
               {{ user.accountType === "employer" ? "Jobs" : "Bids" }}</span
             >
-            <h4 v-if="total">{{ total }}</h4>
+            <!-- totalJobPosted or totalBids can also be zero -->
+            <h4 v-if="totalJobPosted !== undefined">
+              {{ totalJobPosted }}
+            </h4>
+            <h4 v-else-if="totalBids !== undefined">
+              {{ totalBids }}
+            </h4>
             <vue-skeleton-loader
               v-else
               :width="100"
@@ -41,7 +47,12 @@
         <div class="fun-fact" data-fun-fact-color="#b81b7f">
           <div class="fun-fact-text">
             <span>Jobs in progress</span>
-            <h4 v-if="jobsInProgress">{{ jobsInProgress }}</h4>
+            <h4 v-if="assignedJobs !== undefined">
+              {{ assignedJobs }}
+            </h4>
+            <h4 v-else-if="inProgressJobs !== undefined">
+              {{ inProgressJobs }}
+            </h4>
             <vue-skeleton-loader
               v-else
               :width="100"
@@ -57,7 +68,7 @@
         <div class="fun-fact" data-fun-fact-color="#36bd78">
           <div class="fun-fact-text">
             <span>Completed Jobs</span>
-            <h4 v-if="jobsCompleted">{{ jobsCompleted }}</h4>
+            <h4 v-if="completedJobs !== undefined">{{ completedJobs }}</h4>
             <vue-skeleton-loader
               v-else
               :width="100"
@@ -311,11 +322,11 @@ export default {
   name: "Dasboard",
   data() {
     return {
-      noOfFreelancer: "",
-      noOfJobs: "",
-      total: "119",
-      jobsInProgress: "4",
-      jobsCompleted: "37",
+      totalJobPosted: undefined,
+      totalBids: undefined,
+      assignedJobs: undefined,
+      inProgressJobs: undefined,
+      completedJobs: undefined,
     };
   },
   components: {
@@ -327,11 +338,25 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("commonAnalytics").then((res) => {
-      this.noOfFreelancer = res.data.freelancerCount;
-      this.noOfJobs = res.data.jobPostCount;
-    });
-    console.log(document.getElementById("customJs"));
+    this.$store
+      .dispatch("userAnalytics", this.user.accountType)
+      .then(
+        ({
+          data: {
+            totalJobPosted,
+            totalBids,
+            assignedJobs,
+            inProgressJobs,
+            completedJobs,
+          },
+        }) => {
+          this.totalJobPosted = totalJobPosted;
+          this.totalBids = totalBids;
+          this.assignedJobs = assignedJobs;
+          this.inProgressJobs = inProgressJobs;
+          this.completedJobs = completedJobs;
+        }
+      );
     if (!document.getElementById("customJs")) {
       let customScript = document.createElement("script");
       customScript.setAttribute("src", "/assets/js/custom.js");

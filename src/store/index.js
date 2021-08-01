@@ -85,6 +85,24 @@ export default new Vuex.Store({
       }
     },
 
+    userAnalytics(vuexContext, accountType) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get(`/common/user-analytics?accountType=${accountType}`)
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
+
     getAllCategories() {
       // if (vuexContext.state.tokens) {
       //   axios.defaults.headers.common["Authorization"] =
