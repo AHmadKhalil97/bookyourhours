@@ -29,7 +29,13 @@
               <li :class="`${$route.name === 'Bids' ? 'active' : ''}`">
                 <router-link to="/bids">
                   <i class="icon-material-outline-business-center"></i>
-                  bids
+                  Bids
+                </router-link>
+              </li>
+              <li :class="`${$route.name === 'Jobs' ? 'active' : ''}`">
+                <router-link to="/jobs">
+                  <i class="icon-material-outline-business-center"></i>
+                  Jobs
                 </router-link>
               </li>
             </ul>
@@ -126,8 +132,12 @@
 </template>
 
 <script>
+import { getCustomJs } from "../helpers";
 export default {
   name: "SideFreelancer",
+  mounted() {
+    getCustomJs();
+  },
 };
 </script>
 

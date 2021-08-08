@@ -386,6 +386,7 @@
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
+import { avatarSwitcher } from "../helpers";
 
 export default {
   components: { Slider, "tags-input": VoerroTagsInput },
@@ -462,22 +463,7 @@ export default {
   },
   mounted() {
     this.getUser();
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    avatarSwitcher();
   },
 };
 </script>

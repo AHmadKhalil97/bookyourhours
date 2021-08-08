@@ -117,7 +117,7 @@
                     type="number"
                     min="1"
                     class="with-border"
-                    placeholder="e.g. 3 days"
+                    placeholder="no. of days"
                   />
                   <small v-if="error.time.status" class="error">
                     {{ error.time.message }}
@@ -195,8 +195,10 @@
             <div></div>
           </div>
           <div v-else>
-            <i :class="job.id ? 'icon-feather-save' : 'icon-feather-plus'"></i>
-            {{ job.id ? "Update Job" : "Post a Job" }}
+            <i
+              :class="job && job.id ? 'icon-feather-save' : 'icon-feather-plus'"
+            ></i>
+            {{ job && job.id ? "Update Job" : "Post a Job" }}
           </div>
         </button>
       </div>
@@ -209,6 +211,7 @@
 import Multiselect from "vue-multiselect/src/Multiselect";
 import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
+import { getCustomJs } from "../helpers";
 
 export default {
   components: {
@@ -232,22 +235,7 @@ export default {
         this.tags.push(refactorTag);
       });
     });
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    getCustomJs();
   },
   data() {
     return {
@@ -321,7 +309,7 @@ export default {
             tags: this.selectedTags.map((tag) => tag.value),
             questions: this.selectedQuestions.map((quest) => quest.value),
             category: this.category.id,
-            time: this.time + " Days",
+            time: this.time,
           })
           .then(() => {
             this.popupClose();
@@ -358,7 +346,6 @@ export default {
       }
     },
     updateJob() {
-      console.log("update");
       if (this.validateForm()) {
         this.isLoading = true;
         this.$store
@@ -373,7 +360,7 @@ export default {
               tags: this.selectedTags.map((tag) => tag.value),
               questions: this.selectedQuestions.map((quest) => quest.value),
               category: this.category.id,
-              time: this.time + " Days",
+              time: this.time,
             },
           })
           .then(() => {

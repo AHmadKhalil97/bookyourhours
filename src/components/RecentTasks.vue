@@ -32,13 +32,13 @@
                   <div class="task-listing-description">
                     <h3 class="task-listing-title">{{ job.title }}</h3>
                     <ul class="task-icons">
-                      <li>
+                      <!-- <li>
                         <i class="icon-material-outline-location-on"></i>
-                        {{ job.type }}
-                      </li>
+                        {{ job.jobType }}
+                      </li> -->
                       <li>
                         <i class="icon-material-outline-access-time"></i>
-                        {{ job.time }}
+                        {{ job.time }} Days
                       </li>
                     </ul>
                     <p

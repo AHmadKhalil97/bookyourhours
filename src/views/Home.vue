@@ -18,6 +18,7 @@ import HeaderFreelancer from "@/components/HeaderFreelancer";
 import RecentTasks from "@/components/RecentTasks";
 import Price from "@/components/Price";
 // import { Fragment } from "vue-fragment";
+import { getCustomJs } from "../helpers";
 export default {
   components: {
     // Fragment,
@@ -33,22 +34,7 @@ export default {
     },
   },
   mounted() {
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    getCustomJs();
   },
 };
 </script>

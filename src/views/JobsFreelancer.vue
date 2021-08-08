@@ -3,7 +3,7 @@
     <div class="dashboard-content-inner">
       <!-- Dashboard Headline -->
       <div class="dashboard-headline">
-        <h3>Manage Bids</h3>
+        <h3>Your Assigned Jobs</h3>
         <!-- <span class="margin-top-7"
           >Bids for <a href="#">Food Delivery Mobile Application</a></span
         > -->
@@ -17,7 +17,7 @@
             <li>
               <router-link :to="{ name: 'Dashboard' }">Dashboard</router-link>
             </li>
-            <li>Manage Bids</li>
+            <li>Jobs</li>
           </ul>
         </nav>
       </div>
@@ -39,33 +39,13 @@
                 </div>
                 <span v-else>
                   {{ jobBids.length }}
-                  {{ jobBids.length === 1 ? "Bid" : "Bids" }}
+                  {{ jobBids.length === 1 ? "Job" : "Jobs" }}
                 </span>
               </h3>
-              <!-- <div class="sort-by">
-                <select class="selectpicker hide-tick">
-                  <option>Highest First</option>
-                  <option>Lowest First</option>
-                  <option>Fastest First</option>
-                </select>
-              </div> -->
             </div>
 
-            <div v-if="!loading && jobBids.length" class="content">
-              <ul
-                v-if="user.accountType === 'employer'"
-                class="dashboard-box-list"
-              >
-                <job-bid
-                  v-for="bid in jobBids"
-                  :key="bid.id"
-                  :bid="bid"
-                ></job-bid>
-              </ul>
-              <ul
-                v-if="user.accountType === 'freelancer'"
-                class="dashboard-box-list"
-              >
+            <div v-if="jobBids.length" class="content">
+              <ul class="dashboard-box-list">
                 <job-bid-freelancer
                   v-for="bid in jobBids"
                   :key="bid.id"
@@ -81,18 +61,16 @@
   </div>
 </template>
 <script>
-import JobBid from "../components/JobBid.vue";
 import JobBidFreelancer from "../components/JobBidFreelancer.vue";
 import { getCustomJs } from "../helpers";
 export default {
-  name: "JobBids",
+  name: "JobsFreelancer",
   data() {
     return {
       loading: true,
     };
   },
   components: {
-    JobBid,
     JobBidFreelancer,
   },
   created() {
@@ -104,27 +82,16 @@ export default {
   },
   mounted() {
     this.getJobBids();
-    // this.$store.dispatch("getJobBids", {
-    //   jobId: this.$route.params.jobId,
-    // });
-
     getCustomJs();
   },
   methods: {
     async getJobBids() {
-      let obj = {};
-      if (this.$route.params.jobId) {
-        obj = {
-          jobId: this.$route.params.jobId,
-        };
-      } else {
-        obj = {
-          sortBy: "asc",
-          user: this.$store.getters.user.id,
-          isAssigned: false,
-        };
-      }
-      await this.$store.dispatch("getJobBids", obj);
+      let filters = {
+        sortBy: "asc",
+        user: this.$store.getters.user.id,
+        isAssigned: true,
+      };
+      await this.$store.dispatch("getJobBids", filters);
       this.loading = false;
     },
   },

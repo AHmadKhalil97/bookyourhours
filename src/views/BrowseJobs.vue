@@ -17,7 +17,10 @@
       <p>Nothing found!</p>
       <a class="close" href="#"></a>
     </div>
-    <div v-if="jobs" class="tasks-list-container compact-list margin-top-35">
+    <div
+      v-if="jobs"
+      class="tasks-list-container compact-list margin-top-35 margin-bottom-35"
+    >
       <!-- Task -->
       <router-link
         v-for="job in jobs"
@@ -31,13 +34,13 @@
           <div class="task-listing-description">
             <h3 class="task-listing-title">{{ job.title }}</h3>
             <ul class="task-icons">
-              <li>
+              <!-- <li>
                 <i class="icon-material-outline-location-on"></i>
-                {{ job.type }}
-              </li>
+                {{ job.jobType }}
+              </li> -->
               <li>
                 <i class="icon-material-outline-access-time"></i>
-                {{ job.time }}
+                {{ job.time }} Days
               </li>
             </ul>
             <p
@@ -76,6 +79,7 @@
 </template>
 
 <script>
+import { getCustomJs } from "../helpers";
 export default {
   props: ["tags", "value", "price"],
   data() {
@@ -89,7 +93,7 @@ export default {
     };
   },
   created() {
-    if (this.$store.getters.user.accountType !== "freelancer")
+    if (this.$store.getters.user.accountType === "employer")
       this.$router.push("/404");
   },
   watch: {
@@ -125,6 +129,7 @@ export default {
           tags: this.filterTags,
           cats: this.filterCats,
           price: this.filterPrice,
+          status: "notAssigned",
         })
         .then((res) => {
           this.jobs = res.data.results;
@@ -155,22 +160,7 @@ export default {
         this.$emit("update", data.cats);
       }
     }
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    getCustomJs();
     this.getAllJobs();
   },
 };

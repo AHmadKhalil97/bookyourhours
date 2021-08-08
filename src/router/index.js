@@ -56,9 +56,14 @@ const routes = [
       //   component: () => import("@/views/JobPost.vue")
       // },
       {
+        path: "/manage-jobs",
+        name: "ManageJobs",
+        component: () => import("@/views/ManageJobs.vue"),
+      },
+      {
         path: "/jobs",
         name: "Jobs",
-        component: () => import("@/views/ManageJobs.vue"),
+        component: () => import("@/views/JobsFreelancer.vue"),
       },
       {
         params: true,

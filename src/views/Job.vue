@@ -204,7 +204,7 @@
                   <div class="bids-bid">
                     <div class="bid-rate">
                       <div class="rate">${{ bid.price }}</div>
-                      <span>in {{ bid.time }}</span>
+                      <span>in {{ bid.time }} Days</span>
                     </div>
                   </div>
                 </div>
@@ -221,9 +221,9 @@
         <!-- Sidebar -->
         <div class="col-xl-4 col-lg-4">
           <div class="sidebar-container">
-            <div class="countdown green margin-bottom-35">
+            <!-- <div class="countdown green margin-bottom-35">
               6 days, 23 hours left
-            </div>
+            </div> -->
 
             <div class="sidebar-widget">
               <div class="bidding-widget">
@@ -274,7 +274,7 @@
                         type="number"
                         min="1"
                         v-model="time"
-                        placeholder="e.g. 3 days"
+                        placeholder="no. of days"
                         class="with-border margin-bottom-25"
                       />
                     </div>
@@ -430,6 +430,7 @@
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 import VueSkeletonLoader from "skeleton-loader-vue";
 import "@vueform/slider/themes/default.css";
+import { getCustomJs } from "../helpers";
 
 export default {
   data() {
@@ -471,7 +472,6 @@ export default {
   components: { Slider, VueSkeletonLoader },
   methods: {
     addBid() {
-      console.log("bidding");
       if (this.validateBid()) {
         this.isLoading = true;
         this.$store
@@ -488,10 +488,16 @@ export default {
             this.time = "";
             this.price = 20;
             this.isLoading = false;
-            this.success.status = true;
-            setTimeout(() => {
-              this.success.status = false;
-            }, 5000);
+            // this.success.status = true;
+            // setTimeout(() => {
+            //   this.success.status = false;
+            // }, 5000);
+            this.$toast.open({
+              message: "Bid placed successfully!",
+              type: "success",
+              duration: 3000,
+              dismissible: true,
+            });
             this.$store
               .dispatch("getJobBids", { jobId: this.job.id })
               .then((res) => {
@@ -499,10 +505,16 @@ export default {
               });
           })
           .catch((err) => {
-            this.error.response.status = true;
-            this.error.response.message = err.response.data.message
-              ? err.response.data.message
-              : "Something went wrong!";
+            // this.error.response.status = true;
+            // this.error.response.message =
+            //   err.response.data.message || "Something went wrong!";
+
+            this.$toast.open({
+              message: err.response.data.message || "Something went wrong!",
+              type: "error",
+              duration: 3000,
+              dismissible: true,
+            });
             this.isLoading = false;
           });
       }
@@ -553,22 +565,7 @@ export default {
           });
       });
 
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    getCustomJs();
   },
 };
 </script>

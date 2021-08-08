@@ -54,9 +54,8 @@ export default {
         .dispatch("deleteJobBid", {
           id: this.offerToDelete,
         })
-        .then((res) => {
+        .then(() => {
           let obj = {};
-          console.log(res, "Removed Successfully");
           this.close();
           if (this.$route.params.jobId) {
             obj = {
@@ -74,7 +73,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      console.log("offerToDelete", this.offerToDelete);
     },
     close() {
       this.$el.querySelector("button.mfp-close").click();

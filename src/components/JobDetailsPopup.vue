@@ -10,8 +10,14 @@
       </div>
       <!-- Row -->
       <div>
-        <div>
-          <div class="dashboard-box">
+        <div v-if="job">
+          <div v-if="job.loading" class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div v-else class="dashboard-box">
             <!-- Headline -->
             <div class="headline">
               <h3>
@@ -26,13 +32,15 @@
                 <div class="col-8">{{ job.title }}</div>
               </div>
 
-              <div class="row">
+              <div class="row" v-if="job.category && job.category.title">
                 <div class="col-4 bold-light">Category:</div>
-                <div class="col-8">{{ job.category.title }}</div>
+                <div class="col-8">
+                  {{ job.category.title }}
+                </div>
               </div>
 
-              <div class="row">
-                <div class="col-4 bold-light">Bids Recived:</div>
+              <div class="row" v-if="job.bidCount">
+                <div class="col-4 bold-light">Bids Received:</div>
                 <div class="col-8">{{ job.bidCount }}</div>
               </div>
 
@@ -53,19 +61,24 @@
 
               <div class="row">
                 <div class="col-4 bold-light">Status:</div>
-                <div class="col-8">{{ job.status.toUpperCase() }}</div>
+                <div class="col-8">{{ (job.status || "").toUpperCase() }}</div>
+              </div>
+
+              <div class="row" v-if="job.assignedTo">
+                <div class="col-4 bold-light">Assigned To:</div>
+                <div class="col-8">{{ job.assignedTo.name }}</div>
               </div>
 
               <div class="row">
                 <div class="col-4 bold-light">Time Required:</div>
-                <div class="col-8">{{ job.time }}</div>
+                <div class="col-8">{{ job.time }} Days</div>
               </div>
 
               <div class="row">
                 <div class="col-4 bold-light">Tags:</div>
                 <div class="col-8">
                   {{
-                    job.tags
+                    (job.tags || [])
                       .map((tag) => tag.title)
                       .toString()
                       .replace(/,/g, ", ")
@@ -79,6 +92,12 @@
               </div>
             </div>
           </div>
+        </div>
+        <div v-else class="job_placeholder">
+          <i class="icon-feather-alert-triangle"></i>
+          <br />
+          No related job found, it may has been deleted by the employer or
+          admin.
         </div>
         <button @click="close" class="button info ripple-effect">Okay</button>
       </div>
@@ -100,8 +119,58 @@ export default {
       return this.$store.state.job;
     },
   },
-  mounted() {
-    console.log(this.job);
-  },
 };
 </script>
+
+<style scoped>
+.job_placeholder {
+  text-align: center;
+}
+
+.job_placeholder i {
+  font-size: 2.5rem;
+  color: red !important;
+}
+
+.lds-ring {
+  display: inherit;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  margin: 8px;
+  border: 4px solid #5bc0de;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #5bc0de transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.main {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+</style>

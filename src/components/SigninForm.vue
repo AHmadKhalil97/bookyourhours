@@ -35,12 +35,16 @@
       <small v-if="error.password.status" class="error">
         {{ error.password.message }}
       </small>
-      <div class="input-with-icon-left">
+      <div class="input-with-icon-both">
         <i class="icon-material-outline-lock"></i>
+        <i
+          :class="`icon-feather-eye${passwordShowing ? '-off' : ''}`"
+          @click="showPasswordToggle"
+        ></i>
         <input
           id="password"
           v-model.trim="password"
-          type="password"
+          :type="passwordShowing ? 'text' : 'password'"
           class="input-text with-border"
           name="password"
           placeholder="Password"
@@ -89,6 +93,7 @@ export default {
       isLoading: false,
       email: null,
       password: null,
+      passwordShowing: false,
       error: {
         email: {
           status: false,
@@ -106,6 +111,9 @@ export default {
     };
   },
   methods: {
+    showPasswordToggle() {
+      this.passwordShowing = !this.passwordShowing;
+    },
     userLogin() {
       if (this.validateForm()) {
         this.isLoading = true;

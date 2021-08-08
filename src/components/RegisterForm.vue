@@ -90,15 +90,19 @@
         {{ error.password.message }}
       </small>
       <div
-        class="input-with-icon-left"
+        class="input-with-icon-both"
         title="Should be at least 8 characters long"
         data-tippy-placement="bottom"
       >
         <i class="icon-material-outline-lock"></i>
+        <i
+          :class="`icon-feather-eye${passwordShowing ? '-off' : ''}`"
+          @click="showPasswordToggle"
+        ></i>
         <input
           id="password-register"
           v-model.trim="password"
-          type="password"
+          :type="passwordShowing ? 'text' : 'password'"
           class="input-text with-border"
           name="password-register"
           placeholder="Password"
@@ -165,6 +169,7 @@ export default {
       password: "",
       passwordConfirm: "",
       accountType: "freelancer",
+      passwordShowing: false,
       error: {
         name: {
           status: false,
@@ -194,6 +199,9 @@ export default {
     };
   },
   methods: {
+    showPasswordToggle() {
+      this.passwordShowing = !this.passwordShowing;
+    },
     userRegister() {
       if (this.validateForm()) {
         this.isLoading = true;

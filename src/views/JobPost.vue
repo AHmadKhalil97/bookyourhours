@@ -157,7 +157,7 @@
                       type="number"
                       min="1"
                       class="with-border"
-                      placeholder="e.g. 3 days"
+                      placeholder="no. of days"
                     />
                     <small v-if="error.time.status" class="error">
                       {{ error.time.message }}
@@ -301,6 +301,7 @@
 import Multiselect from "vue-multiselect/src/Multiselect";
 import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
+import { getCustomJs } from "../helpers";
 
 export default {
   components: {
@@ -324,22 +325,7 @@ export default {
         this.tags.push(refactorTag);
       });
     });
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    getCustomJs();
   },
   data() {
     return {
@@ -403,7 +389,6 @@ export default {
   },
   methods: {
     postJob() {
-      console.log(this.selectedTags);
       if (this.validateForm()) {
         this.isLoading = true;
         this.$store

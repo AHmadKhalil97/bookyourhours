@@ -16,7 +16,11 @@
             <span
               class="dashboard-status-button"
               :class="job.assignedTo ? 'green' : 'yellow'"
-              >{{ job.assignedTo ? "Assigned" : "Pending Approval" }}</span
+              >{{
+                job.assignedTo
+                  ? "Assigned To '" + job.assignedTo.name + "'"
+                  : "Unassigned"
+              }}</span
             >
           </h3>
 
@@ -35,6 +39,31 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div v-if="job.assignedTo">
+      <span v-if="job.status === 'completed'" class="countdown green">
+        <i class="icon-material-outline-access-time"></i>
+        Completed
+      </span>
+
+      <span v-else-if="timeLeft.status === 'ON_TIME'" class="countdown green">
+        <i class="icon-material-outline-access-time"></i>
+        {{ timeLeft.days }} days left in delivery.
+      </span>
+
+      <span
+        v-else-if="timeLeft.status === 'DEADLINE_NEAR'"
+        class="countdown yellow"
+      >
+        <i class="icon-material-outline-access-time"></i>
+        {{ timeLeft.days }} left in delivery.
+      </span>
+
+      <span v-else class="countdown red">
+        <i class="icon-material-outline-access-time"></i>
+        {{ timeLeft.days }} days late.
+      </span>
     </div>
 
     <!-- Buttons -->
@@ -82,11 +111,16 @@
   </li>
 </template>
 <script>
-import { getJquery } from "../helpers";
+import { getCustomJs, getTimeLeft } from "../helpers";
 export default {
   name: "Job",
   props: {
     job: Object,
+  },
+  data() {
+    return {
+      timeLeft: {},
+    };
   },
   methods: {
     editPost() {
@@ -95,11 +129,10 @@ export default {
           id: this.job.id,
           data: { title: "Vue" },
         })
-        .then((res) => {
+        .then(() => {
           this.$store.dispatch("getAllJobs", {
             user: JSON.parse(localStorage.getItem("user")).id,
           });
-          console.log(res, "Updted Successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -110,8 +143,18 @@ export default {
     },
   },
   mounted() {
-    getJquery();
-    console.log(this.job);
+    getCustomJs();
+    this.timeLeft = getTimeLeft(this.job);
   },
 };
 </script>
+
+<style scoped>
+.countdown {
+  width: unset;
+  display: inline-block;
+  font-size: unset;
+  padding: 14px 28px;
+  margin: 0.5rem 0;
+}
+</style>

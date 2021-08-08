@@ -43,13 +43,36 @@
 
             <div class="intro-search-field"> -->
               <multiselect
+                v-model="selectedTags"
+                :options="tags"
+                :multiple="true"
+                :searchable="false"
+                :close-on-select="false"
+                :clear-on-select="false"
+                :loading="gettingTags"
+                placeholder="All Tags"
+                label="value"
+                track-by="value"
+                :preselect-first="true"
+              >
+                <template slot="selection" slot-scope="{ values, isOpen }"
+                  ><span
+                    class="multiselect__single"
+                    v-if="values.length &amp;&amp; !isOpen"
+                    >{{ values.length }} options selected</span
+                  ></template
+                >
+              </multiselect>
+            </div>
+            <div class="intro-search-field">
+              <multiselect
                 v-model="value"
                 :options="categories"
                 :multiple="true"
                 :searchable="false"
                 :close-on-select="false"
                 :clear-on-select="false"
-                :loading="gettingCat"
+                :loading="gettingCats"
                 placeholder="All Categories"
                 label="name"
                 track-by="name"
@@ -118,7 +141,8 @@ export default {
   name: "Header_Employer",
   data() {
     return {
-      gettingCat: true,
+      gettingCats: true,
+      gettingTags: true,
       value: [],
       options: [],
       categories: [],
@@ -141,12 +165,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getAllCategories").then((res) => {
-      this.gettingCat = false;
+      this.gettingCats = false;
       res.data.map((cat) => {
         this.categories.push({ name: cat.title, id: cat.id });
       });
     });
     this.$store.dispatch("getAllTags").then((res) => {
+      this.gettingTags = false;
       res.data.map((tag) => {
         let refactorTag = {
           key: tag.id,

@@ -252,7 +252,10 @@
                   <a href="#"
                     ><div class="user-avatar status-online">
                       <img
-                        :src="'https://ui-avatars.com/api/?name=' + user.name"
+                        :src="
+                          user.pictures[0] ||
+                          'https://ui-avatars.com/api/?name=' + user.name
+                        "
                         alt=""
                       /></div
                   ></a>
@@ -266,7 +269,10 @@
                     <div class="user-details">
                       <div class="user-avatar status-online">
                         <img
-                          :src="'https://ui-avatars.com/api/?name=' + user.name"
+                          :src="
+                            user.pictures[0] ||
+                            'https://ui-avatars.com/api/?name=' + user.name
+                          "
                           alt=""
                         />
                       </div>

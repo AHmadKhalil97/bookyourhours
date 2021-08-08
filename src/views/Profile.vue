@@ -8,8 +8,12 @@
         <!-- Breadcrumbs -->
         <nav id="breadcrumbs" class="dark">
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Dashboard</a></li>
+            <li>
+              <router-link :to="{ name: 'Home' }">Home</router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'Dashboard' }">Dashboard</router-link>
+            </li>
             <li>Settings</li>
           </ul>
         </nav>
@@ -37,11 +41,19 @@
                   >
                     <img
                       class="profile-pic"
-                      :src="'https://ui-avatars.com/api/?name=' + user.name"
+                      :src="
+                        pictures[0] ||
+                        'https://ui-avatars.com/api/?name=' + user.name
+                      "
                       alt=""
                     />
                     <div class="upload-button"></div>
-                    <input class="file-upload" type="file" accept="image/*" />
+                    <input
+                      v-on:change="onFileChange"
+                      class="file-upload"
+                      type="file"
+                      accept="image/*"
+                    />
                   </div>
                 </div>
 
@@ -169,23 +181,23 @@
               <ul class="fields-ul">
                 <li v-if="accountType == 'freelancer'">
                   <div class="row">
-                    <div class="col-xl-6">
-                      <div class="submit-field">
-                        <div class="bidding-widget">
-                          <!-- Headline -->
-                          <span class="bidding-detail"
-                            >Set your <strong>minimal hourly rate</strong> in
-                            <strong>$</strong></span
-                          >
+                    <!-- <div class="col-xl-6"> -->
+                    <!-- <div class="submit-field"> -->
+                    <!-- <div class="bidding-widget"> -->
+                    <!-- Headline -->
+                    <!-- <span class="bidding-detail" -->
+                    <!-- >Set your <strong>minimal hourly rate</strong> in -->
+                    <!-- <strong>$</strong></span -->
+                    <!-- > -->
 
-                          <!-- Slider -->
-                          <div class="bidding-value margin-bottom-10">
-                            <!-- $<span id="biddingVal"></span> -->
-                            <Slider :max="1000" v-model="rate" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <!-- Slider -->
+                    <!-- <div class="bidding-value margin-bottom-10"> -->
+                    <!-- $<span id="biddingVal"></span> -->
+                    <!-- <Slider :max="200" v-model="rate" /> -->
+                    <!-- </div> -->
+                    <!-- </div> -->
+                    <!-- </div> -->
+                    <!-- </div> -->
 
                     <div class="col-xl-6">
                       <div class="submit-field">
@@ -456,13 +468,17 @@ Leverage agile frameworks to provide a robust synopsis for high level overviews.
                     /> -->
 </template>
 <script>
-import Slider from "@vueform/slider/dist/slider.vue2.js";
+// import Slider from "@vueform/slider/dist/slider.vue2.js";
 import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
 import { countries } from "../utils";
+import { avatarSwitcher } from "../helpers";
 
 export default {
-  components: { Slider, "tags-input": VoerroTagsInput },
+  components: {
+    // Slider,
+    "tags-input": VoerroTagsInput,
+  },
   data() {
     return {
       isLoading: false,
@@ -472,6 +488,7 @@ export default {
       countries: [...countries],
       selectedTags: [],
       accountType: "",
+      pictures: [],
     };
   },
   computed: {
@@ -495,6 +512,7 @@ export default {
           nationality: this.user.nationality,
           hourlyRate: this.rate,
           skills: filterTags,
+          pictures: this.pictures,
           phoneNumber: this.user.phoneNumber,
           accountType: this.user.accountType,
         })
@@ -515,6 +533,7 @@ export default {
     getUser() {
       this.user = this.$store.getters.user;
       this.accountType = this.user.accountType;
+      this.pictures = this.user.pictures;
       if (this.user.skills.length > 0) {
         this.user.skills.map((skill) => {
           this.$store.dispatch("getTagById", skill).then((res) => {
@@ -537,25 +556,25 @@ export default {
         });
       });
     },
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      console.log(file);
+      // var image = new Image();
+      // var reader = new FileReader();
+      // var vm = this;
+      // reader.onload = (e) => {
+      //   vm.pictures.push(e.target.result);
+      // };
+      // reader.readAsDataURL(file);
+    },
   },
   mounted() {
     this.getUser();
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    avatarSwitcher();
   },
 };
 </script>

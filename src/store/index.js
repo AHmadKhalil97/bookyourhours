@@ -67,27 +67,23 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    commonAnalytics(vuexContext) {
-      if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + vuexContext.state.tokens.access.token;
-        return new Promise((resolve, reject) => {
-          axios
-            .get("/common/analytics")
-            .then((response) => {
-              resolve(response);
-            })
-            .catch((error) => {
-              console.log(error);
-              reject(error);
-            });
-        });
-      }
+    commonAnalytics() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get("/common/analytics")
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error);
+          });
+      });
     },
 
     userAnalytics(vuexContext, accountType) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -104,10 +100,6 @@ export default new Vuex.Store({
     },
 
     getAllCategories() {
-      // if (vuexContext.state.tokens) {
-      //   axios.defaults.headers.common["Authorization"] =
-      //     "Bearer " + vuexContext.state.tokens.access.token;
-      // }
       return new Promise((resolve, reject) => {
         axios
           .get("/category/")
@@ -122,7 +114,7 @@ export default new Vuex.Store({
     },
     getUserById(vuexContext, id) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -141,7 +133,7 @@ export default new Vuex.Store({
     },
     updateProfile(vuexContext, data) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -152,6 +144,7 @@ export default new Vuex.Store({
               nationality: data.nationality,
               hourlyRate: data.hourlyRate,
               skills: data.skills,
+              pictures: data.pictures,
               accountType: data.accountType,
               phoneNumber: data.phoneNumber,
             })
@@ -168,7 +161,7 @@ export default new Vuex.Store({
     },
     postJob(vuexContext, data) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -186,7 +179,7 @@ export default new Vuex.Store({
     editJob(vuexContext, req) {
       if (vuexContext.state.tokens) {
         const { id, data } = req;
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -202,10 +195,6 @@ export default new Vuex.Store({
       }
     },
     getAllTags() {
-      // if (vuexContext.state.tokens) {
-      //   axios.defaults.headers.common["Authorization"] =
-      //     "Bearer " + vuexContext.state.tokens.access.token;
-      // }
       return new Promise((resolve, reject) => {
         axios
           .get("/tag")
@@ -220,7 +209,7 @@ export default new Vuex.Store({
     },
     getTagById(vuexContext, id) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -236,13 +225,9 @@ export default new Vuex.Store({
       }
     },
     getAllJobs(vuexContext, filter) {
-      // if (vuexContext.state.tokens) {
-      //   axios.defaults.headers.common["Authorization"] =
-      //     "Bearer " + vuexContext.state.tokens.access.token;
-      // }
       return new Promise((resolve, reject) => {
         if (filter) {
-          let filterText = "?";
+          let filterText = "?limit=1000&";
           if (filter.sortBy === "asc") {
             filterText += "sortBy=asc";
           }
@@ -277,6 +262,9 @@ export default new Vuex.Store({
           if (filter.user) {
             filterText += `user=${filter.user}`;
           }
+          if (filter.status) {
+            filterText += `status=${filter.status}`;
+          }
           axios
             .get(`/jobPost${filterText}`)
             .then((response) => {
@@ -302,7 +290,7 @@ export default new Vuex.Store({
       });
     },
     deleteJob(vuexContext, data) {
-      axios.defaults.headers.common["Authorization"] =
+      axios.defaults.headers.common.Authorization =
         "Bearer " + vuexContext.state.tokens.access.token;
       return new Promise((resolve, reject) => {
         axios
@@ -318,7 +306,7 @@ export default new Vuex.Store({
     },
     getAJob(vuexContext, data) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -335,7 +323,7 @@ export default new Vuex.Store({
     },
     createBid(vuexContext, data) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -352,19 +340,22 @@ export default new Vuex.Store({
     },
     getJobBids(vuexContext, filters) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
+
         if (filters) {
-          let filterText = "?";
+          let filterText = "?limit=1000&";
           if (filters.sortBy) {
             filterText += `sortBy=${filters.sortBy}`;
           }
-
           if (filters.jobId) {
             filterText += `&jobPost=${filters.jobId}`;
           }
           if (filters.user) {
             filterText += `&user=${filters.user}`;
+          }
+          if ("isAssigned" in filters) {
+            filterText += `&isAssigned=${filters.isAssigned}`;
           }
           return new Promise((resolve, reject) => {
             axios
@@ -381,7 +372,7 @@ export default new Vuex.Store({
         } else {
           return new Promise((resolve, reject) => {
             axios
-              .get("/bid")
+              .get("/bid?limit=1000")
               .then((response) => {
                 resolve(response.data.results);
               })
@@ -395,7 +386,7 @@ export default new Vuex.Store({
     },
     deleteJobBid(vuexContext, data) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -412,7 +403,7 @@ export default new Vuex.Store({
     },
     assignJobBid(vuexContext, data) {
       if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
+        axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
@@ -433,7 +424,7 @@ export default new Vuex.Store({
           new Date().getTime() >
           Date.parse(vuexContext.state.tokens.access.expires)
         ) {
-          axios.defaults.headers.common["Authorization"] =
+          axios.defaults.headers.common.Authorization =
             "Bearer " + vuexContext.state.tokens.access.token;
           return new Promise((resolve, reject) => {
             axios

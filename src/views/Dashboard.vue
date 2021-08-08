@@ -11,7 +11,9 @@
         <!-- Breadcrumbs -->
         <nav id="breadcrumbs" class="dark">
           <ul>
-            <li><a href="#">Home</a></li>
+            <li>
+              <router-link :to="{ name: 'Home' }">Home</router-link>
+            </li>
             <li>Dashboard</li>
           </ul>
         </nav>
@@ -317,6 +319,7 @@
 
 <script>
 import VueSkeletonLoader from "skeleton-loader-vue";
+import { getCustomJs } from "../helpers";
 
 export default {
   name: "Dasboard",
@@ -353,26 +356,17 @@ export default {
           this.totalJobPosted = totalJobPosted;
           this.totalBids = totalBids;
           this.assignedJobs = assignedJobs;
-          this.inProgressJobs = inProgressJobs;
-          this.completedJobs = completedJobs;
+          this.inProgressJobs =
+            typeof inProgressJobs === "object"
+              ? inProgressJobs.length
+              : inProgressJobs;
+          this.completedJobs =
+            typeof completedJobs === "object"
+              ? completedJobs.length
+              : completedJobs;
         }
       );
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.removeChild(customScript);
-      document.SearchremoveChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    getCustomJs();
   },
 };
 </script>

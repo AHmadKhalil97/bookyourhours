@@ -239,9 +239,7 @@
 
     //     if ($(this).closest(".header-notifications").is(".active")) {
     //       close_user_dropdown();
-    //       console.log('inactive');
     //     } else {
-    //       console.log('active');
     //       close_user_dropdown();
     //       userMenu.addClass("active");
     //     }
@@ -349,29 +347,29 @@
         .addClass("tooltip-visible");
     });
 
-    // Avatar Switcher
-    function avatarSwitcher() {
-      var readURL = function (input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
+    // // Avatar Switcher
+    // function avatarSwitcher() {
+    //   var readURL = function (input) {
+    //     if (input.files && input.files[0]) {
+    //       var reader = new FileReader();
 
-          reader.onload = function (e) {
-            $(".profile-pic").attr("src", e.target.result);
-          };
+    //       reader.onload = function (e) {
+    //         $(".profile-pic").attr("src", e.target.result);
+    //       };
 
-          reader.readAsDataURL(input.files[0]);
-        }
-      };
+    //       reader.readAsDataURL(input.files[0]);
+    //     }
+    //   };
 
-      $(".file-upload").on("change", function () {
-        readURL(this);
-      });
+    //   $(".file-upload").on("change", function () {
+    //     readURL(this);
+    //   });
 
-      $(".upload-button").on("click", function () {
-        $(".file-upload").click();
-      });
-    }
-    avatarSwitcher();
+    //   $(".upload-button").on("click", function () {
+    //     $(".file-upload").click();
+    //   });
+    // }
+    // avatarSwitcher();
 
     /*----------------------------------------------------*/
     /* Dashboard Scripts

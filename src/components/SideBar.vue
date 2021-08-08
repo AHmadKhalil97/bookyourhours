@@ -45,8 +45,8 @@
 
             <!-- <ul data-submenu-title="Organize and Manage"> -->
             <ul data-submenu-title="Organize and Manage">
-              <li :class="`${$route.name === 'Jobs' ? 'active' : ''}`">
-                <router-link to="/jobs">
+              <li :class="`${$route.name === 'ManageJobs' ? 'active' : ''}`">
+                <router-link to="/manage-jobs">
                   <i class="icon-material-outline-business-center"></i>
                   Jobs
                 </router-link>
@@ -122,8 +122,12 @@
 </template>
 
 <script>
+import { getCustomJs } from "../helpers";
 export default {
   name: "SideBar",
+  mounted() {
+    getCustomJs();
+  },
 };
 </script>
 

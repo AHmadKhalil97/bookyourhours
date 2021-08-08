@@ -34,8 +34,20 @@
             <!-- Headline -->
             <div class="headline">
               <h3>
-                <i class="icon-material-outline-business-center"></i> My Job
-                Listings
+                <i class="icon-material-outline-business-center"></i>
+                <div v-if="loading" class="lds-ring">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div v-else class="jobs-header">
+                  <span> My Job Listings </span>
+                  <span>
+                    Total Jobs:
+                    {{ jobs && jobs.data ? jobs.data.results.length : 0 }}
+                  </span>
+                </div>
               </h3>
             </div>
 
@@ -98,7 +110,7 @@
 
 <script>
 import Job from "../components/Job.vue";
-import { getJquery } from "../../src/helpers";
+import { getCustomJs } from "../helpers";
 export default {
   created() {
     if (this.$store.getters.user.accountType !== "employer")
@@ -106,12 +118,18 @@ export default {
   },
   components: { Job },
   name: "ManageJobs",
+  data() {
+    return {
+      loading: true,
+    };
+  },
   methods: {
     async getUserJobs() {
       const { id } = JSON.parse(localStorage.getItem("user"));
-      this.$store.dispatch("getAllJobs", {
+      await this.$store.dispatch("getAllJobs", {
         user: id,
       });
+      this.loading = false;
     },
     clearJob() {
       this.$store.commit("setJob", {});
@@ -119,7 +137,7 @@ export default {
   },
   mounted() {
     this.getUserJobs();
-    getJquery();
+    getCustomJs();
   },
   computed: {
     jobs() {
@@ -128,3 +146,49 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.jobs-header {
+  display: inline;
+  width: calc(100% - 32px);
+}
+.jobs-header span:nth-child(2) {
+  float: right;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  padding-top: 4px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border: 3px solid #2a41e8;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #2a41e8 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

@@ -131,7 +131,9 @@
                 </li> -->
                 <li>
                   <!-- <a href="#"><span>Post a Job</span></a> -->
-                  <router-link :to="{ name: 'Jobs' }">Jobs</router-link>
+                  <router-link :to="{ name: 'ManageJobs' }"
+                    >Manage Jobs</router-link
+                  >
                 </li>
                 <!-- <li>
                   <a href="#"><span>Post a Task</span></a>

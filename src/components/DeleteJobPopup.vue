@@ -52,8 +52,7 @@ export default {
         .dispatch("deleteJob", {
           id: this.job.id,
         })
-        .then((res) => {
-          console.log(res, "Removed Successfully");
+        .then(() => {
           this.close();
           this.$store.dispatch("getAllJobs", {
             user: JSON.parse(localStorage.getItem("user")).id,

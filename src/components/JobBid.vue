@@ -12,32 +12,24 @@
         <!-- Name -->
         <div class="freelancer-name">
           <h4>
-            <a
-              ref="FreeLancerProfilePopup"
-              href="#freelancer-profile-dialog"
-              @click="setFreelancer"
-              class="popup-with-zoom-anim"
-            >
-              {{ bid.user.name }}
-              <img
-                class="flag"
-                src="images/flags/sk.svg"
-                alt=""
-                title="Slovakia"
-                data-tippy-placement="top"
-            /></a>
+            {{ bid.jobPost.title }}
+            <img
+              class="flag"
+              src="images/flags/sk.svg"
+              alt=""
+              title="Slovakia"
+              data-tippy-placement="top"
+            />
           </h4>
 
           <!-- Details -->
           <span class="freelancer-detail-item"
-            ><a href="#"
-              ><i class="icon-feather-mail"></i> {{ bid.user.email }}</a
-            ></span
-          >
-          <span class="freelancer-detail-item"
-            ><i class="icon-feather-phone"></i> (+92){{
-              bid.user.phoneNumber
-            }}</span
+            ><i class="icon-feather-dollar-sign"></i>
+            {{ bid.jobPost.price }}
+          </span>
+          <span class="freelancer-detail-item">
+            <i class="icon-material-outline-access-time"></i>
+            {{ bid.jobPost.time + " Days" }}</span
           >
 
           <!-- Rating -->
@@ -53,8 +45,7 @@
               }}</span>
             </li>
             <li>
-              <strong>{{ bid.time }}</strong
-              ><span>Delivery Time</span>
+              <strong>{{ bid.time }} Days</strong><span>Delivery Time</span>
             </li>
           </ul>
 
@@ -67,17 +58,12 @@
             "
           >
             <a
-              v-if="user.accountType === 'employer' && !bid.isAssigned"
+              v-if="!bid.isAssigned"
               @click="acceptOffer"
               class="acceptOffer button green ripple-effect"
               ><i class="icon-material-outline-check"></i>
               {{ offerAccepted ? "Offer Accepted !!" : "Accept Offer" }}
             </a>
-            <!-- <a
-              href="#small-dialog-2"
-              class="popup-with-zoom-anim button dark ripple-effect"
-              ><i class="icon-feather-mail"></i> Send Message</a
-            > -->
             <a
               v-if="!bid.isAssigned"
               href="#delete-offer-dialog"
@@ -90,7 +76,7 @@
             <a
               v-if="bid.isAssigned"
               class="button ripple-effect green"
-              title="Bid has been accepted by the Employer."
+              title="Bid has been accepted."
               data-tippy-placement="top"
             >
               BID ACCEPTED
@@ -103,6 +89,7 @@
 </template>
 
 <script>
+import { getCustomJs } from "../helpers";
 export default {
   name: "JobBid",
   props: {
@@ -114,10 +101,6 @@ export default {
     };
   },
   methods: {
-    setFreelancer() {
-      console.log(this.bid.user);
-      this.$store.commit("setFreelancer", this.bid.user);
-    },
     acceptOffer() {
       this.$store
         .dispatch("assignJobBid", {
@@ -132,7 +115,7 @@ export default {
             duration: 2000,
             dismissible: true,
           });
-          this.$router.push("/jobs");
+          this.$router.push("/manage-jobs");
         });
     },
     setOffer() {
@@ -140,22 +123,7 @@ export default {
     },
   },
   mounted() {
-    if (!document.getElementById("customJs")) {
-      let customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    } else {
-      let customScript = document.getElementById("customJs");
-      document.body.removeChild(customScript);
-      document.body.removeChild(document.getElementById("backtotop"));
-      customScript = document.createElement("script");
-      customScript.setAttribute("src", "/assets/js/custom.js");
-      customScript.setAttribute("type", "text/javascript");
-      customScript.setAttribute("id", "customJs");
-      document.body.appendChild(customScript);
-    }
+    getCustomJs();
   },
   computed: {
     user() {

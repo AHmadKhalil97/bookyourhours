@@ -782,6 +782,8 @@ a.header-notifications-button i {
 
 .user-avatar img {
 	width: 100%;
+	height: 100%;
+	object-fit: cover;
 	display: inline-block;
 	border-radius: 50%;
 	image-rendering: -webkit-optimize-contrast;
@@ -6956,6 +6958,48 @@ table.basic-table { margin-bottom: 0; }
 	border: none;
 }
 
+/* Input with icon left & inside */
+.input-with-icon-both {
+	display: block;
+	position: relative;
+}
+
+.input-with-icon-both input {
+	padding-right: 45px;
+	padding-left: 65px;
+}
+
+.input-with-icon-both i:first-child {
+	position: absolute;
+	top: 0;
+	color: #a0a0a0;
+	text-align: center;
+	line-height: 48px;
+	width: 48px;
+	height: 48px;
+	font-size: 19px;
+	background-color: #f8f8f8;
+	border: 1px solid #e0e0e0;
+	box-sizing: border-box;
+	display: block;
+	border-radius: 4px 0 0 4px;
+}
+
+.input-with-icon-both i:nth-child(2) {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 15px;
+	font-size: 20px;
+	color: #a0a0a0;
+	font-style: normal;
+	cursor: pointer;
+}
+
+.input-with-icon-both.no-border i {
+	border: none;
+}
+
 
 /* ---------------------------------- */
 /* Keywords Input
@@ -9219,6 +9263,11 @@ transform: translateY(-18px);
 .countdown.yellow {
 	background-color: #fbf6dd;
 	color: #a18d29;
+}
+
+.countdown.red {
+	background-color: #df424a;
+	color: white;
 }
 
 
@@ -16425,6 +16474,14 @@ ul.dashboard-box-list > li:hover {
 
 	.bold-light {
 		font-weight: 600;
+	}
+
+	.job_expired {
+		background: #fceeef;
+	}
+
+	.job_expired:hover {
+		background-color: #f9ddde !important;
 	}
 
 	@media (max-width: 768px) { 
