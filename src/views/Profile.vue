@@ -472,7 +472,7 @@ Leverage agile frameworks to provide a robust synopsis for high level overviews.
 import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
 import { countries } from "../utils";
-import { avatarSwitcher } from "../helpers";
+import { getCustomJs, avatarSwitcher } from "../helpers";
 
 export default {
   components: {
@@ -574,6 +574,7 @@ export default {
   },
   mounted() {
     this.getUser();
+    getCustomJs();
     avatarSwitcher();
   },
 };

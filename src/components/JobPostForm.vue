@@ -26,7 +26,12 @@
               <div class="col-xl-4">
                 <div class="submit-field">
                   <h5>Job Title</h5>
-                  <input v-model="title" type="text" class="with-border" />
+                  <input
+                    v-model="title"
+                    type="text"
+                    class="with-border"
+                    placeholder="Name of the job"
+                  />
                   <small v-if="error.title.status" class="error">
                     {{ error.title.message }}
                   </small>
@@ -60,14 +65,14 @@
 
               <div class="col-xl-4">
                 <div class="submit-field">
-                  <h5>Salary</h5>
+                  <h5>Budget</h5>
                   <div class="row">
                     <div class="col">
                       <div class="input-with-icon">
                         <input
                           v-model="price"
                           class="with-border"
-                          type="text"
+                          type="number"
                           placeholder="Price"
                         />
                         <i class="currency">USD</i>

@@ -55,7 +55,7 @@
               </div>
 
               <div class="row">
-                <div class="col-4 bold-light">Salary:</div>
+                <div class="col-4 bold-light">Budget:</div>
                 <div class="col-8">{{ job.price }}</div>
               </div>
 

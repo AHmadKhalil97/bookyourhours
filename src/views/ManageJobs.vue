@@ -51,7 +51,7 @@
               </h3>
             </div>
 
-            <div class="content">
+            <div v-if="!loading" class="content">
               <ul v-if="jobs && jobs.data" class="dashboard-box-list">
                 <job
                   v-for="job in jobs.data.results"

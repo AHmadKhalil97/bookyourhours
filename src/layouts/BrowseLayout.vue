@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar v-if="user === 'employer'" />
+    <NavbarFreelancer v-if="user === 'freelancer'" />
 
     <div class="margin-top-90"></div>
     <div class="margin-top-90"></div>
@@ -88,6 +89,7 @@
 
 <script>
 import Navbar from "@/components/Navbar";
+import NavbarFreelancer from "@/components/NavbarFreelancer";
 import Footer from "@/components/Footer";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 import SigninPopup from "@/components/SigninPopup";
@@ -99,6 +101,7 @@ import Multiselect from "vue-multiselect/src/Multiselect";
 export default {
   components: {
     Navbar,
+    NavbarFreelancer,
     Footer,
     // Fragment,
     SigninPopup,
@@ -146,6 +149,11 @@ export default {
         this.tags.push(refactorTag);
       });
     });
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user.accountType;
+    },
   },
 };
 </script>

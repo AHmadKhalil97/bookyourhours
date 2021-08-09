@@ -92,10 +92,13 @@
                 class="countdown yellow"
               >
                 <i class="icon-material-outline-access-time"></i>
-                {{ timeLeft.days }} left in delivery.
+                {{ timeLeft.days }} days left in delivery.
               </span>
 
-              <span v-else class="countdown red">
+              <span
+                v-else-if="timeLeft.status === 'LATE'"
+                class="countdown red"
+              >
                 <i class="icon-material-outline-access-time"></i>
                 {{ timeLeft.days }} days late.
               </span>

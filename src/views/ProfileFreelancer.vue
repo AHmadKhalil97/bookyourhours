@@ -386,7 +386,7 @@
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
-import { avatarSwitcher } from "../helpers";
+import { getCustomJs, avatarSwitcher } from "../helpers";
 
 export default {
   components: { Slider, "tags-input": VoerroTagsInput },
@@ -463,6 +463,7 @@ export default {
   },
   mounted() {
     this.getUser();
+    getCustomJs();
     avatarSwitcher();
   },
 };

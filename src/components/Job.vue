@@ -47,22 +47,25 @@
         Completed
       </span>
 
-      <span v-else-if="timeLeft.status === 'ON_TIME'" class="countdown green">
+      <span
+        v-else-if="computedTimeLeft.status === 'ON_TIME'"
+        class="countdown green"
+      >
         <i class="icon-material-outline-access-time"></i>
-        {{ timeLeft.days }} days left in delivery.
+        {{ computedTimeLeft.days }} days left in delivery.
       </span>
 
       <span
-        v-else-if="timeLeft.status === 'DEADLINE_NEAR'"
+        v-else-if="computedTimeLeft.status === 'DEADLINE_NEAR'"
         class="countdown yellow"
       >
         <i class="icon-material-outline-access-time"></i>
-        {{ timeLeft.days }} left in delivery.
+        {{ computedTimeLeft.days }} days left in delivery.
       </span>
 
       <span v-else class="countdown red">
         <i class="icon-material-outline-access-time"></i>
-        {{ timeLeft.days }} days late.
+        {{ computedTimeLeft.days }} days late.
       </span>
     </div>
 
@@ -117,11 +120,6 @@ export default {
   props: {
     job: Object,
   },
-  data() {
-    return {
-      timeLeft: {},
-    };
-  },
   methods: {
     editPost() {
       this.$store
@@ -144,7 +142,11 @@ export default {
   },
   mounted() {
     getCustomJs();
-    this.timeLeft = getTimeLeft(this.job);
+  },
+  computed: {
+    computedTimeLeft() {
+      return getTimeLeft(this.job);
+    },
   },
 };
 </script>

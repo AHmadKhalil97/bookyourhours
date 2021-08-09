@@ -92,10 +92,6 @@ export default {
       jobs: null,
     };
   },
-  created() {
-    if (this.$store.getters.user.accountType === "employer")
-      this.$router.push("/404");
-  },
   watch: {
     price: function (newPrice) {
       this.filterPrice = [...newPrice];

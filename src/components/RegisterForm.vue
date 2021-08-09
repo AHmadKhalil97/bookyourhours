@@ -243,8 +243,13 @@ export default {
         }
         if (!this.validPassword(this.password)) {
           this.error.password.status = true;
-          this.error.password.message =
-            "Password must be eight characters one letter and one number";
+          const format = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
+          if (format.test(this.password))
+            this.error.password.message =
+              "Password must not contain any special characters";
+          else
+            this.error.password.message =
+              "Password must be eight characters one letter and one number";
         }
         if (this.password !== this.passwordConfirm) {
           this.error.confirmPass.status = true;
