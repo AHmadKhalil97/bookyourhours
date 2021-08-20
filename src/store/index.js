@@ -227,12 +227,12 @@ export default new Vuex.Store({
     getAllJobs(vuexContext, filter) {
       return new Promise((resolve, reject) => {
         if (filter) {
-          let filterText = "?limit=1000&";
+          let filterText = "?limit=1000";
           if (filter.sortBy === "asc") {
-            filterText += "sortBy=asc";
+            filterText += "&sortBy=asc";
           }
           if (filter.sortBy === "desc") {
-            filterText += "sortBy=desc";
+            filterText += "&sortBy=desc";
           }
           if (filter.tags && filter.tags.length > 0) {
             filterText += "&tags=";
@@ -260,10 +260,10 @@ export default new Vuex.Store({
           }
 
           if (filter.user) {
-            filterText += `user=${filter.user}`;
+            filterText += `&user=${filter.user}`;
           }
           if (filter.status) {
-            filterText += `status=${filter.status}`;
+            filterText += `&status=${filter.status}`;
           }
           axios
             .get(`/jobPost${filterText}`)
@@ -321,6 +321,23 @@ export default new Vuex.Store({
         });
       }
     },
+    completeAJob(vuexContext, data) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common.Authorization =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .post(`/jobPost/complete/${data.id}`)
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
     createBid(vuexContext, data) {
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common.Authorization =
@@ -344,9 +361,9 @@ export default new Vuex.Store({
           "Bearer " + vuexContext.state.tokens.access.token;
 
         if (filters) {
-          let filterText = "?limit=1000&";
+          let filterText = "?limit=1000";
           if (filters.sortBy) {
-            filterText += `sortBy=${filters.sortBy}`;
+            filterText += `&sortBy=${filters.sortBy}`;
           }
           if (filters.jobId) {
             filterText += `&jobPost=${filters.jobId}`;

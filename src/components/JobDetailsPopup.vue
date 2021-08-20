@@ -86,6 +86,8 @@
                 </div>
               </div>
 
+              <hr class="hr-light" />
+
               <div class="row">
                 <div class="col-4 bold-light">Description:</div>
                 <div class="col-8">{{ job.description }}</div>

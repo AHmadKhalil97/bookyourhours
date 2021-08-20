@@ -5245,7 +5245,6 @@ span.blog-item-tag {
 	font-size: 18px;
 	font-weight: 600;
 	color: #333;
-	cursor: pointer;
 }
 
 .freelancer-name img.flag {
@@ -10426,6 +10425,10 @@ button.mfp-close {
 .delete-dialog .button.red {
 	background-color: #dc3139;
 	box-shadow: 0 3px 8px rgb(234 65 81 / 15%);
+}
+
+.info-dialog {
+	max-width: 768px !important;
 }
 
 .info-dialog i {
@@ -16482,6 +16485,11 @@ ul.dashboard-box-list > li:hover {
 
 	.job_expired:hover {
 		background-color: #f9ddde !important;
+	}
+
+	.hr-light {
+		margin: .8rem 1.6rem;
+    border-top: 0;
 	}
 
 	@media (max-width: 768px) { 

@@ -42,7 +42,14 @@
             </div>
 
             <div class="intro-search-field"> -->
-              <multiselect
+              <v-select
+                multiple
+                v-model="selectedTags"
+                label="value"
+                :options="tags"
+                placeholder="All Tags"
+              ></v-select>
+              <!-- <multiselect
                 v-model="selectedTags"
                 :options="tags"
                 :multiple="true"
@@ -62,7 +69,7 @@
                     >{{ values.length }} options selected</span
                   ></template
                 >
-              </multiselect>
+              </multiselect> -->
             </div>
             <div class="intro-search-field">
               <multiselect
@@ -132,11 +139,14 @@
 <script>
 // import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
+import "vue-select/dist/vue-select.css";
 import Multiselect from "vue-multiselect/src/Multiselect";
+import vSelect from "vue-select";
 export default {
   components: {
     // "tags-input": VoerroTagsInput,
     Multiselect,
+    vSelect,
   },
   name: "Header_Employer",
   data() {
@@ -189,6 +199,9 @@ export default {
 </script>
 
 <style>
+.v-select {
+  width: 100%;
+}
 .multiselect__spinner:before,
 .multiselect__spinner:after {
   position: absolute;

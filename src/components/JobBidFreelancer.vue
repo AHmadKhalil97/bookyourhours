@@ -1,5 +1,5 @@
 <template>
-  <li :class="jobStatus === 'PENDING' ? '' : 'job_expired'">
+  <li :class="jobStatus === 'PENDING_DELIVERY' ? '' : 'job_expired'">
     <div class="freelancer-overview manage-candidates">
       <div class="freelancer-overview-inner">
         <!-- Avatar -->
@@ -12,31 +12,30 @@
         <!-- Name -->
         <div class="freelancer-name">
           <h4>
+            {{ (bid.jobPost || {}).title || "Job Not Found !!" }}
             <a
               ref="JobDetailsDialog"
               href="#job-details-dialog"
               @click="setJob"
               class="popup-with-zoom-anim"
             >
-              {{ (bid.jobPost || {}).title || "Job Not Found !!" }}
-              <img
-                class="flag"
-                src="images/flags/sk.svg"
-                alt=""
-                title="Slovakia"
-                data-tippy-placement="top"
-            /></a>
+              <i class="icon-line-awesome-info-circle"></i>
+            </a>
           </h4>
 
           <!-- Details -->
-          <span v-if="jobStatus === 'PENDING'" class="freelancer-detail-item"
+          <!-- <span v-if="jobStatus === 'PENDING_DELIVERY'" class="freelancer-detail-item"
             ><i class="icon-feather-dollar-sign"></i>
             {{ bid.jobPost.price }}
-          </span>
-          <span v-if="jobStatus === 'PENDING'" class="freelancer-detail-item">
-            <i class="icon-material-outline-access-time"></i>
-            {{ bid.jobPost.time + " Days" }}</span
+          </span> -->
+          <span
+            v-if="jobStatus === 'PENDING_DELIVERY'"
+            class="freelancer-detail-item"
           >
+            <i class="icon-material-outline-access-time"></i>
+            Assigned at: {{ bid.jobPost.assignedAt.split("T")[0] }}</span
+          >
+          <br />
           <span v-if="jobStatus === 'DELETED'" class="freelancer-detail-item">
             <i class="icon-feather-alert-triangle"></i>
             Job may has been deleted by the creator.</span
@@ -117,6 +116,12 @@
               <strong>{{ bid.time }} Days</strong><span>Delivery Time</span>
             </li>
           </ul>
+          <button
+            @click="deliverNow"
+            class="deliver button green ripple-effect"
+          >
+            Deliver Now!
+          </button>
         </div>
       </div>
     </div>
@@ -135,7 +140,7 @@ export default {
       jobStatus: this.bid.jobPost
         ? this.bid.jobPost.status === "assigned" && !this.bid.isAssigned
           ? "ASSIGNED_TO_OTHER"
-          : "PENDING"
+          : "PENDING_DELIVERY"
         : "DELETED",
       timeLeft: {},
     };
@@ -158,6 +163,9 @@ export default {
     setOffer() {
       this.$store.commit("setOfferToDelete", this.bid.id);
     },
+    deliverNow() {
+      console.log("Pending implementation");
+    },
   },
   mounted() {
     getCustomJs();
@@ -178,6 +186,24 @@ export default {
     display: unset;
     font-size: unset;
     padding: 14px 28px;
+  }
+}
+.icon-line-awesome-info-circle {
+  color: #5bc0de !important;
+}
+button.deliver {
+  font-size: 18px;
+  padding: 13px 22px;
+  margin: auto;
+  margin-top: 1.6rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 1200px) {
+  button.deliver {
+    max-width: 576px;
   }
 }
 </style>

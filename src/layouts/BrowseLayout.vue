@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Navbar v-if="user === 'employer'" />
     <NavbarFreelancer v-if="user === 'freelancer'" />
+    <Navbar v-else />
 
     <div class="margin-top-90"></div>
     <div class="margin-top-90"></div>

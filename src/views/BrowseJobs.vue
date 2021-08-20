@@ -15,7 +15,7 @@
     <!-- Tasks Container -->
     <div v-if="showAlert" class="notification error closeable">
       <p>Nothing found!</p>
-      <a class="close" href="#"></a>
+      <a class="close" @click="showAlert = !showAlert"></a>
     </div>
     <div
       v-if="jobs"
@@ -84,6 +84,7 @@ export default {
   props: ["tags", "value", "price"],
   data() {
     return {
+      loading: true,
       orderBy: "",
       filterPrice: [],
       filterTags: [],
@@ -118,6 +119,7 @@ export default {
   methods: {
     getAllJobs() {
       this.showAlert = false;
+      this.loading = true;
       this.jobs = null;
       this.$store
         .dispatch("getAllJobs", {
@@ -134,6 +136,7 @@ export default {
           } else {
             this.showAlert = true;
           }
+          this.loading = false;
         });
     },
   },
@@ -157,7 +160,8 @@ export default {
       }
     }
     getCustomJs();
-    this.getAllJobs();
+    // props are present or not
+    if (!(this.tags.length || this.value)) this.getAllJobs();
   },
 };
 </script>

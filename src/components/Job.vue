@@ -12,15 +12,18 @@
         <!-- Details -->
         <div class="job-listing-description">
           <h3 class="job-listing-title">
-            <a href="#">{{ job.title }}</a>
-            <span
-              class="dashboard-status-button"
-              :class="job.assignedTo ? 'green' : 'yellow'"
-              >{{
-                job.assignedTo
-                  ? "Assigned To '" + job.assignedTo.name + "'"
-                  : "Unassigned"
-              }}</span
+            {{ job.title }}
+            <a
+              v-if="job.assignedTo"
+              ref="JobDetailsDialog"
+              href="#job-details-dialog"
+              @click="setJob"
+              class="popup-with-zoom-anim"
+            >
+              <i class="icon-line-awesome-info-circle"></i>
+            </a>
+            <span v-else class="dashboard-status-button yellow"
+              >Unassigned</span
             >
           </h3>
 
@@ -29,12 +32,17 @@
             <ul>
               <li>
                 <i class="icon-material-outline-date-range"></i>
-                Posted on 10 July, 2019
+                Posted on {{ job.createdAt.split("T")[0] }}
               </li>
-              <li>
+              <br />
+              <li v-if="job.assignedTo">
+                <i class="icon-material-outline-person-pin"></i>
+                Assigned To '{{ job.assignedTo.name }}'
+              </li>
+              <!-- <li>
                 <i class="icon-material-outline-date-range"></i>
                 Expiring on 10 August, 2019
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -63,14 +71,14 @@
         {{ computedTimeLeft.days }} days left in delivery.
       </span>
 
-      <span v-else class="countdown red">
+      <span v-else-if="timeLeft.status === 'LATE'" class="countdown red">
         <i class="icon-material-outline-access-time"></i>
         {{ computedTimeLeft.days }} days late.
       </span>
     </div>
 
     <!-- Buttons -->
-    <div class="buttons-to-right always-visible">
+    <div v-if="!job.assignedTo" class="buttons-to-right always-visible">
       <!-- <a class="button ripple-effect"> -->
       <router-link
         class="button ripple-effect"
@@ -158,5 +166,8 @@ export default {
   font-size: unset;
   padding: 14px 28px;
   margin: 0.5rem 0;
+}
+.icon-line-awesome-info-circle {
+  color: #5bc0de !important;
 }
 </style>

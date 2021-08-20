@@ -13,23 +13,24 @@
         <div class="freelancer-name">
           <h4>
             {{ bid.jobPost.title }}
-            <img
-              class="flag"
-              src="images/flags/sk.svg"
-              alt=""
-              title="Slovakia"
-              data-tippy-placement="top"
-            />
+            <a
+              ref="JobDetailsDialog"
+              href="#job-details-dialog"
+              @click="setJob"
+              class="popup-with-zoom-anim"
+            >
+              <i class="icon-line-awesome-info-circle"></i>
+            </a>
           </h4>
 
           <!-- Details -->
-          <span class="freelancer-detail-item"
+          <!-- <span class="freelancer-detail-item"
             ><i class="icon-feather-dollar-sign"></i>
             {{ bid.jobPost.price }}
-          </span>
+          </span> -->
           <span class="freelancer-detail-item">
             <i class="icon-material-outline-access-time"></i>
-            {{ bid.jobPost.time + " Days" }}</span
+            Placed On: {{ bid.createdAt.split("T")[0] }}</span
           >
 
           <!-- Rating -->
@@ -101,6 +102,20 @@ export default {
     };
   },
   methods: {
+    setJob() {
+      this.$store.commit("setJob", {
+        loading: true,
+      });
+      if (this.bid.jobPost?.id) {
+        this.$store
+          .dispatch("getAJob", { id: this.bid.jobPost.id })
+          .then((res) => {
+            this.$store.commit("setJob", res.data);
+          });
+      } else {
+        this.$store.commit("setJob", null);
+      }
+    },
     acceptOffer() {
       this.$store
         .dispatch("assignJobBid", {
@@ -132,3 +147,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.icon-line-awesome-info-circle {
+  color: #5bc0de !important;
+}
+</style>
