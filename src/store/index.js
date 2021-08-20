@@ -338,6 +338,25 @@ export default new Vuex.Store({
         });
       }
     },
+    submitAJob(vuexContext, data) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common.Authorization =
+          "Bearer " + vuexContext.state.tokens.access.token;
+
+        const { id, files } = data;
+        return new Promise((resolve, reject) => {
+          axios
+            .put(`/jobPost/submit/${id}`, { files })
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
     createBid(vuexContext, data) {
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common.Authorization =

@@ -50,31 +50,48 @@
     </div>
 
     <div v-if="job.assignedTo">
-      <span v-if="job.status === 'completed'" class="countdown green">
-        <i class="icon-material-outline-access-time"></i>
+      <span v-if="job.status === 'submitted'" class="countdown green">
+        <i class="icon-feather-thumbs-up"></i>
+        Job has been submitted by the freelancer
+
+        <ul class="tags">
+          <li v-for="file in job.projectFiles" :key="file">
+            <a :href="file" target="_blank" class="tag">{{
+              re.exec(file)[1]
+            }}</a>
+          </li>
+        </ul>
+
+        <button @click="completeJob" class="button green ripple-effect">
+          Complete Job
+        </button>
+      </span>
+      <span v-else-if="job.status === 'completed'" class="countdown green">
+        <i class="icon-feather-thumbs-up"></i>
         Completed
       </span>
+      <div v-else>
+        <span
+          v-if="computedTimeLeft.status === 'ON_TIME'"
+          class="countdown green"
+        >
+          <i class="icon-material-outline-access-time"></i>
+          {{ computedTimeLeft.days }} days left in delivery.
+        </span>
 
-      <span
-        v-else-if="computedTimeLeft.status === 'ON_TIME'"
-        class="countdown green"
-      >
-        <i class="icon-material-outline-access-time"></i>
-        {{ computedTimeLeft.days }} days left in delivery.
-      </span>
+        <span
+          v-else-if="computedTimeLeft.status === 'DEADLINE_NEAR'"
+          class="countdown yellow"
+        >
+          <i class="icon-material-outline-access-time"></i>
+          {{ computedTimeLeft.days }} days left in delivery.
+        </span>
 
-      <span
-        v-else-if="computedTimeLeft.status === 'DEADLINE_NEAR'"
-        class="countdown yellow"
-      >
-        <i class="icon-material-outline-access-time"></i>
-        {{ computedTimeLeft.days }} days left in delivery.
-      </span>
-
-      <span v-else-if="timeLeft.status === 'LATE'" class="countdown red">
-        <i class="icon-material-outline-access-time"></i>
-        {{ computedTimeLeft.days }} days late.
-      </span>
+        <span v-else-if="timeLeft.status === 'LATE'" class="countdown red">
+          <i class="icon-material-outline-access-time"></i>
+          {{ computedTimeLeft.days }} days late.
+        </span>
+      </div>
     </div>
 
     <!-- Buttons -->
@@ -128,6 +145,11 @@ export default {
   props: {
     job: Object,
   },
+  data() {
+    return {
+      re: /(?:\/([^/]+))?$/,
+    };
+  },
   methods: {
     editPost() {
       this.$store
@@ -146,6 +168,26 @@ export default {
     },
     setJob() {
       this.$store.commit("setJob", this.job);
+    },
+    completeJob() {
+      this.$store
+        .dispatch("completeAJob", {
+          id: this.job.id,
+        })
+        .then(() => {
+          this.$store.dispatch("getAllJobs", {
+            user: JSON.parse(localStorage.getItem("user")).id,
+          });
+          this.$toast.open({
+            message: "Job has been completed Successfully!",
+            type: "success",
+            duration: 2000,
+            dismissible: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   mounted() {
@@ -169,5 +211,41 @@ export default {
 }
 .icon-line-awesome-info-circle {
   color: #5bc0de !important;
+}
+
+.tags {
+  list-style: none;
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+}
+
+.tag {
+  color: inherit;
+  border-radius: 3px 0 0 3px;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 12px 10px 10px 0;
+  text-decoration: underline;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: "";
+  height: 8px;
+  left: 10px;
+  position: absolute;
+  width: 8px;
+  top: 10px;
+}
+
+button.green {
+  margin-top: 1rem;
+  width: 100%;
 }
 </style>

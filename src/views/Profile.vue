@@ -47,13 +47,13 @@
                       "
                       alt=""
                     />
-                    <div class="upload-button"></div>
-                    <input
+                    <div @click="uploadFiles" class="upload-button"></div>
+                    <!-- <input
                       v-on:change="onFileChange"
                       class="file-upload"
                       type="file"
                       accept="image/*"
-                    />
+                    /> -->
                   </div>
                 </div>
 
@@ -536,7 +536,7 @@ export default {
       this.pictures = this.user.pictures;
       if (this.user.skills.length > 0) {
         this.user.skills.map((skill) => {
-          this.$store.dispatch("getTagById", skill).then((res) => {
+          this.$store.dispatch("getTagById", skill.id).then((res) => {
             let refSkill = {
               key: res.data.id,
               value: res.data.title,
@@ -556,20 +556,21 @@ export default {
         });
       });
     },
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-    createImage(file) {
-      console.log(file);
-      // var image = new Image();
-      // var reader = new FileReader();
-      // var vm = this;
-      // reader.onload = (e) => {
-      //   vm.pictures.push(e.target.result);
-      // };
-      // reader.readAsDataURL(file);
+    uploadFiles() {
+      window.cloudinary
+        .openUploadWidget(
+          {
+            cloud_name: "dnmge13ki",
+            upload_preset: "qutpmtl3",
+            multiple: false,
+          },
+          (error, result) => {
+            if (!error && result && result.event === "success") {
+              this.pictures.push(result.info.url);
+            }
+          }
+        )
+        .open();
     },
   },
   mounted() {

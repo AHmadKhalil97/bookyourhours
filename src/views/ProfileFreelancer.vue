@@ -440,7 +440,7 @@ export default {
       this.user = this.$store.getters.user;
       if (this.user.skills.length > 0) {
         this.user.skills.map((skill) => {
-          this.$store.dispatch("getTagById", skill).then((res) => {
+          this.$store.dispatch("getTagById", skill.id).then((res) => {
             let refSkill = {
               key: res.data.id,
               value: res.data.title,

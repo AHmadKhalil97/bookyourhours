@@ -1,5 +1,5 @@
 <template>
-  <li :class="jobStatus === 'PENDING_DELIVERY' ? '' : 'job_expired'">
+  <li :class="`job_${jobStatus.toLowerCase()}`">
     <div class="freelancer-overview manage-candidates">
       <div class="freelancer-overview-inner">
         <!-- Avatar -->
@@ -29,13 +29,25 @@
             {{ bid.jobPost.price }}
           </span> -->
           <span
-            v-if="jobStatus === 'PENDING_DELIVERY'"
+            v-if="
+              jobStatus === 'PENDING_DELIVERY' ||
+              jobStatus === 'SUBMITTED' ||
+              jobStatus === 'COMPLETED'
+            "
             class="freelancer-detail-item"
           >
             <i class="icon-material-outline-access-time"></i>
             Assigned at: {{ bid.jobPost.assignedAt.split("T")[0] }}</span
           >
           <br />
+          <span v-if="jobStatus === 'SUBMITTED'" class="freelancer-detail-item">
+            <i class="icon-feather-thumbs-up"></i>
+            Job has been submitted and pending for employer's review.</span
+          >
+          <span v-if="jobStatus === 'COMPLETED'" class="freelancer-detail-item">
+            <i class="icon-feather-thumbs-up"></i>
+            Job has been completed.</span
+          >
           <span v-if="jobStatus === 'DELETED'" class="freelancer-detail-item">
             <i class="icon-feather-alert-triangle"></i>
             Job may has been deleted by the creator.</span
@@ -69,7 +81,13 @@
               @click="setOffer"
               ><i class="icon-feather-trash-2"></i
             ></a>
-            <span v-if="bid.isAssigned">
+            <span
+              v-if="
+                bid.isAssigned &&
+                jobStatus !== 'SUBMITTED' &&
+                jobStatus !== 'COMPLETED'
+              "
+            >
               <span
                 v-if="bid.jobPost.status === 'completed'"
                 class="countdown green"
@@ -116,12 +134,36 @@
               <strong>{{ bid.time }} Days</strong><span>Delivery Time</span>
             </li>
           </ul>
-          <button
-            @click="deliverNow"
-            class="deliver button green ripple-effect"
-          >
-            Deliver Now!
-          </button>
+          <div v-if="jobStatus !== 'SUBMITTED' && jobStatus !== 'COMPLETED'">
+            <button
+              v-if="deliveredFiles.length < 1"
+              @click="uploadFiles"
+              class="deliver button green ripple-effect"
+            >
+              <i class="icon-line-awesome-cloud-upload margin-right-8"></i>
+              Deliver Now!
+            </button>
+            <div v-else class="files_uploaded">
+              <div class="actions">
+                <button @click="submit" class="button green ripple-effect">
+                  <i class="icon-feather-send margin-right-8"></i>
+                  Submit
+                </button>
+
+                <button
+                  @click="deliveredFiles = []"
+                  class="button red ripple-effect"
+                >
+                  Cancel
+                </button>
+              </div>
+              <ul class="tags">
+                <li v-for="file in deliveredFiles" :key="file.filename">
+                  <span class="tag">{{ file.filename }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -136,13 +178,19 @@ export default {
     bid: Object,
   },
   data() {
+    let jobStatus = "";
+    if (this.bid.jobPost)
+      if (this.bid.jobPost.status === "submitted") jobStatus = "SUBMITTED";
+      else if (this.bid.jobPost.status === "completed") jobStatus = "COMPLETED";
+      else if (this.bid.jobPost.status === "assigned" && !this.bid.isAssigned)
+        jobStatus = "ASSIGNED_TO_OTHER";
+      else jobStatus = "PENDING_DELIVERY";
+    else jobStatus = "DELETED";
+
     return {
-      jobStatus: this.bid.jobPost
-        ? this.bid.jobPost.status === "assigned" && !this.bid.isAssigned
-          ? "ASSIGNED_TO_OTHER"
-          : "PENDING_DELIVERY"
-        : "DELETED",
+      jobStatus,
       timeLeft: {},
+      deliveredFiles: [],
     };
   },
   methods: {
@@ -163,8 +211,49 @@ export default {
     setOffer() {
       this.$store.commit("setOfferToDelete", this.bid.id);
     },
-    deliverNow() {
-      console.log("Pending implementation");
+    uploadFiles() {
+      window.cloudinary
+        .openUploadWidget(
+          {
+            cloud_name: "dnmge13ki",
+            upload_preset: "qutpmtl3",
+          },
+          (error, result) => {
+            if (!error && result && result.event === "success") {
+              const { url, public_id, format } = result.info;
+              this.deliveredFiles.push({
+                url,
+                filename: `${public_id}.${format}`,
+              });
+            }
+          }
+        )
+        .open();
+    },
+    submit() {
+      if (this.deliveredFiles.length)
+        this.$store
+          .dispatch("submitAJob", {
+            id: this.bid.jobPost.id,
+            files: this.deliveredFiles.map((file) => file.url),
+          })
+          .then(() => {
+            this.$toast.open({
+              message: "Job has been submitted Successfully!",
+              type: "success",
+              duration: 2000,
+              dismissible: true,
+            });
+            this.jobStatus = "SUBMITTED";
+            this.deliveredFiles = [];
+          });
+      else
+        this.$toast.open({
+          message: "No files attached",
+          type: "error",
+          duration: 2000,
+          dismissible: true,
+        });
     },
   },
   mounted() {
@@ -201,6 +290,68 @@ button.deliver {
   justify-content: center;
   align-items: center;
 }
+
+.files_uploaded .actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.files_uploaded .actions button {
+  width: 48%;
+  font-size: 18px;
+  padding: 13px 22px;
+  margin-top: 1.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tags {
+  list-style: none;
+  margin: 1.4% 1%;
+  overflow: hidden;
+  padding: 0;
+}
+
+.tags li {
+  float: left;
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: "";
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 @media (min-width: 1200px) {
   button.deliver {
     max-width: 576px;

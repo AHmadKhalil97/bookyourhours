@@ -16479,12 +16479,20 @@ ul.dashboard-box-list > li:hover {
 		font-weight: 600;
 	}
 
-	.job_expired {
+	.job_deleted, .job_assigned_to_other {
 		background: #fceeef;
 	}
 
-	.job_expired:hover {
+	.job_deleted:hover, .job_assigned_to_other:hover {
 		background-color: #f9ddde !important;
+	}
+
+	.job_completed {
+		background: #d4edd9;
+	}
+
+	.job_completed:hover {
+		background-color: #a9dbb4 !important;
 	}
 
 	.hr-light {
