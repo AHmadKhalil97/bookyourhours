@@ -30,6 +30,7 @@ export const inializeHeaderDropDown = () => {
 
     $(userMenuTrigger).on("click", function (event) {
       event.preventDefault();
+      event.stopPropagation();
 
       if ($(this).closest(".header-notifications").is(".active")) {
         close_user_dropdown();

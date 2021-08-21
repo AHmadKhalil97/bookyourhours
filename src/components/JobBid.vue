@@ -24,10 +24,6 @@
           </h4>
 
           <!-- Details -->
-          <!-- <span class="freelancer-detail-item"
-            ><i class="icon-feather-dollar-sign"></i>
-            {{ bid.jobPost.price }}
-          </span> -->
           <span class="freelancer-detail-item">
             <i class="icon-material-outline-access-time"></i>
             Placed On: {{ bid.createdAt.split("T")[0] }}</span

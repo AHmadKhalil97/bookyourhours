@@ -42,7 +42,7 @@
                     <img
                       class="profile-pic"
                       :src="
-                        pictures[0] ||
+                        profilePicture ||
                         'https://ui-avatars.com/api/?name=' + user.name
                       "
                       alt=""
@@ -488,7 +488,7 @@ export default {
       countries: [...countries],
       selectedTags: [],
       accountType: "",
-      pictures: [],
+      profilePicture: "",
     };
   },
   computed: {
@@ -512,7 +512,7 @@ export default {
           nationality: this.user.nationality,
           hourlyRate: this.rate,
           skills: filterTags,
-          pictures: this.pictures,
+          pictures: [this.profilePicture],
           phoneNumber: this.user.phoneNumber,
           accountType: this.user.accountType,
         })
@@ -533,7 +533,7 @@ export default {
     getUser() {
       this.user = this.$store.getters.user;
       this.accountType = this.user.accountType;
-      this.pictures = this.user.pictures;
+      this.profilePicture = this.user.pictures[0];
       if (this.user.skills.length > 0) {
         this.user.skills.map((skill) => {
           this.$store.dispatch("getTagById", skill.id).then((res) => {
@@ -566,7 +566,7 @@ export default {
           },
           (error, result) => {
             if (!error && result && result.event === "success") {
-              this.pictures.push(result.info.url);
+              this.profilePicture = result.info.url;
             }
           }
         )

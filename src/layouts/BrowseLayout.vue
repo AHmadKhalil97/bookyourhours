@@ -228,7 +228,6 @@ export default {
 }
 
 .tags-input input {
-  min-width: 270px;
   background: transparent;
   border: none;
 }

@@ -24,10 +24,10 @@
           </h4>
 
           <!-- Details -->
-          <!-- <span v-if="jobStatus === 'PENDING_DELIVERY'" class="freelancer-detail-item"
-            ><i class="icon-feather-dollar-sign"></i>
-            {{ bid.jobPost.price }}
-          </span> -->
+          <span class="freelancer-detail-item">
+            <i class="icon-material-outline-access-time"></i>
+            Placed On: {{ bid.createdAt.split("T")[0] }}</span
+          >
           <span
             v-if="
               jobStatus === 'PENDING_DELIVERY' ||
@@ -40,7 +40,10 @@
             Assigned at: {{ bid.jobPost.assignedAt.split("T")[0] }}</span
           >
           <br />
-          <span v-if="jobStatus === 'SUBMITTED'" class="freelancer-detail-item">
+          <span
+            v-if="jobStatus === 'SUBMITTED'"
+            class="text_submitted freelancer-detail-item"
+          >
             <i class="icon-feather-thumbs-up"></i>
             Job has been submitted and pending for employer's review.</span
           >
@@ -134,7 +137,7 @@
               <strong>{{ bid.time }} Days</strong><span>Delivery Time</span>
             </li>
           </ul>
-          <div v-if="jobStatus !== 'SUBMITTED' && jobStatus !== 'COMPLETED'">
+          <div v-if="jobStatus === 'PENDING_DELIVERY'">
             <button
               v-if="deliveredFiles.length < 1"
               @click="uploadFiles"
@@ -182,6 +185,8 @@ export default {
     if (this.bid.jobPost)
       if (this.bid.jobPost.status === "submitted") jobStatus = "SUBMITTED";
       else if (this.bid.jobPost.status === "completed") jobStatus = "COMPLETED";
+      else if (this.bid.jobPost.status === "notAssigned")
+        jobStatus = "NOT_ASSIGNED";
       else if (this.bid.jobPost.status === "assigned" && !this.bid.isAssigned)
         jobStatus = "ASSIGNED_TO_OTHER";
       else jobStatus = "PENDING_DELIVERY";

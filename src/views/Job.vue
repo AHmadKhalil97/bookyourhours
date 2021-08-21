@@ -251,7 +251,7 @@
                     ></a>
                   </div>
                   <span class="bidding-detail"
-                    >Set your <strong>minimal rate</strong></span
+                    >Select your <strong>suitable rate</strong></span
                   >
 
                   <!-- Price Slider -->
@@ -333,27 +333,27 @@
                     <div v-else><span>Place a Bid</span></div>
                   </button>
                 </div>
-                <div class="bidding-signup">
+                <!-- <div class="bidding-signup">
                   Don't have an account?
                   <a
                     href="#sign-in-dialog"
                     class="register-tab sign-in popup-with-zoom-anim"
                     >Sign Up</a
                   >
-                </div>
+                </div> -->
               </div>
             </div>
 
             <!-- Sidebar Widget -->
             <div class="sidebar-widget">
-              <h3>Bookmark or Share</h3>
+              <h3>Share this job!</h3>
 
               <!-- Bookmark Button -->
-              <button class="bookmark-button margin-bottom-25">
+              <!-- <button class="bookmark-button margin-bottom-25">
                 <span class="bookmark-icon"></span>
                 <span class="bookmark-text">Bookmark</span>
                 <span class="bookmarked-text">Bookmarked</span>
-              </button>
+              </button> -->
 
               <!-- Copy URL -->
               <div class="copy-url">
@@ -369,7 +369,7 @@
               </div>
 
               <!-- Share Buttons -->
-              <div class="share-buttons margin-top-25">
+              <!-- <div class="share-buttons margin-top-25">
                 <div class="share-buttons-trigger">
                   <i class="icon-feather-share-2"></i>
                 </div>
@@ -414,7 +414,7 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
