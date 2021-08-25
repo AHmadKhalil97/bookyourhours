@@ -175,7 +175,10 @@
                       <div class="verified-badge"></div>
                       <a href="#"
                         ><img
-                          src="/assets/images/user-avatar-big-01.jpg"
+                          :src="
+                            bid.user.pictures[0] ||
+                            'https://ui-avatars.com/api/?name=' + bid.user.name
+                          "
                           alt=""
                       /></a>
                     </div>

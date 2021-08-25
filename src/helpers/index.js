@@ -96,10 +96,17 @@ export const getTimeLeft = (job) => {
     const { assignedAt, completesAt } = job;
     const diffMilliseconds = new Date(completesAt) - new Date(assignedAt);
     const daysLetf = Math.trunc(diffMilliseconds / (1000 * 60 * 60 * 24));
-    return {
-      days: Math.abs(daysLetf),
-      status:
-        daysLetf > 0 ? (daysLetf > 3 ? "ON_TIME" : "DEADLINE_NEAR") : "LATE",
-    };
+    const days = Math.abs(daysLetf);
+    if (typeof days === "number" && days > 0)
+      return {
+        days,
+        status:
+          daysLetf > 0 ? (daysLetf > 3 ? "ON_TIME" : "DEADLINE_NEAR") : "LATE",
+      };
+    else
+      return {
+        days: 0,
+        status: "ERROR",
+      };
   }
 };
