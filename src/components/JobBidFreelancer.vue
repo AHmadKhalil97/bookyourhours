@@ -147,6 +147,15 @@
               Deliver Now!
             </button>
             <div v-else class="files_uploaded">
+              <div class="desc">
+                <h4>
+                  Delivery Message <span class="text-muted">(Optional)</span>
+                </h4>
+                <textarea
+                  v-model="deliveryMessage"
+                  class="with-border"
+                ></textarea>
+              </div>
               <div class="actions">
                 <button @click="submit" class="button green ripple-effect">
                   <i class="icon-feather-send margin-right-8"></i>
@@ -196,6 +205,7 @@ export default {
       jobStatus,
       timeLeft: {},
       deliveredFiles: [],
+      deliveryMessage: "",
     };
   },
   methods: {
@@ -222,6 +232,7 @@ export default {
           {
             cloud_name: "dnmge13ki",
             upload_preset: "qutpmtl3",
+            sources: ["local"],
           },
           (error, result) => {
             if (!error && result && result.event === "success") {
@@ -241,6 +252,7 @@ export default {
           .dispatch("submitAJob", {
             id: this.bid.jobPost.id,
             files: this.deliveredFiles.map((file) => file.url),
+            deliveryMessage: this.deliveryMessage,
           })
           .then(() => {
             this.$toast.open({
@@ -296,6 +308,10 @@ button.deliver {
   align-items: center;
 }
 
+.files_uploaded {
+  margin-top: 1.6rem;
+}
+
 .files_uploaded .actions {
   display: flex;
   justify-content: space-around;
@@ -305,7 +321,6 @@ button.deliver {
   width: 48%;
   font-size: 18px;
   padding: 13px 22px;
-  margin-top: 1.6rem;
   display: flex;
   justify-content: center;
   align-items: center;

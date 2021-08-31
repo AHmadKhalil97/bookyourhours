@@ -54,6 +54,11 @@
         <i class="icon-feather-thumbs-up"></i>
         Job has been submitted by the freelancer
 
+        <div v-if="job.deliveryMessage" class="delivery_message">
+          <strong>Message: </strong>
+          {{ job.deliveryMessage }}
+        </div>
+
         <ul class="tags">
           <li v-for="file in job.projectFiles" :key="file">
             <a :href="file" target="_blank" class="tag">{{
@@ -211,6 +216,17 @@ export default {
 }
 .icon-line-awesome-info-circle {
   color: #5bc0de !important;
+}
+
+.delivery_message {
+  max-width: 500px;
+  text-align: justify;
+  font-size: 14px;
+  padding: 0.5rem 0;
+  margin: 1rem 0 0.5rem 0;
+  line-height: 20px;
+  border-top: 1px dashed #289c41;
+  border-bottom: 1px dashed #289c41;
 }
 
 .tags {

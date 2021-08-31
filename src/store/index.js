@@ -343,10 +343,10 @@ export default new Vuex.Store({
         axios.defaults.headers.common.Authorization =
           "Bearer " + vuexContext.state.tokens.access.token;
 
-        const { id, files } = data;
+        const { id, files, deliveryMessage } = data;
         return new Promise((resolve, reject) => {
           axios
-            .put(`/jobPost/submit/${id}`, { files })
+            .put(`/jobPost/submit/${id}`, { files, deliveryMessage })
             .then((response) => {
               resolve(response);
             })

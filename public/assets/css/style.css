@@ -17683,6 +17683,10 @@ a.headline-link:after {
   border-top: 0;
 }
 
+.text-muted {
+  color: #6c757d !important;
+}
+
 @media (max-width: 768px) {
   a.headline-link {
     position: relative;
